@@ -1140,20 +1140,6 @@
             });
         }
 
-        if (preset === "about-testimonials") {
-            return Object.assign({}, base, {
-                slidesPerView: 1,
-                spaceBetween: 24,
-                speed: state.reducedMotion.matches ? 0 : 650,
-                autoHeight: true,
-                autoplay: false,
-                loop: true,
-                allowTouchMove: true,
-                simulateTouch: true,
-                navigation: undefined
-            });
-        }
-
         return Object.assign({}, base, {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -1178,80 +1164,6 @@
         });
     }
 
-    function bindManualSwiperControls(element, swiper) {
-        const controls = getSwiperElements(element);
-
-        if (!swiper || (!controls.previous && !controls.next)) {
-            return;
-        }
-
-        [
-            {
-                button: controls.previous,
-                direction: "previous"
-            },
-            {
-                button: controls.next,
-                direction: "next"
-            }
-        ].forEach(function (control) {
-            if (
-                !control.button ||
-                control.button.dataset.manualSwiperControl === "true"
-            ) {
-                return;
-            }
-
-            control.button.dataset.manualSwiperControl = "true";
-            control.button.addEventListener("click", function (event) {
-                event.preventDefault();
-
-                if (control.direction === "previous") {
-                    swiper.slidePrev();
-                } else {
-                    swiper.slideNext();
-                }
-            });
-        });
-    }
-
-    function bindSwiperScrollFallback(element) {
-        const controls = getSwiperElements(element);
-        const wrapper = element.querySelector(".swiper-wrapper");
-
-        if (!wrapper || (!controls.previous && !controls.next)) {
-            return;
-        }
-
-        [
-            {
-                button: controls.previous,
-                direction: -1
-            },
-            {
-                button: controls.next,
-                direction: 1
-            }
-        ].forEach(function (control) {
-            if (
-                !control.button ||
-                control.button.dataset.scrollSwiperControl === "true"
-            ) {
-                return;
-            }
-
-            control.button.dataset.scrollSwiperControl = "true";
-            control.button.addEventListener("click", function (event) {
-                event.preventDefault();
-
-                wrapper.scrollBy({
-                    left: control.direction * wrapper.clientWidth,
-                    behavior: state.reducedMotion.matches ? "auto" : "smooth"
-                });
-            });
-        });
-    }
-
     function initializeSwiper(element) {
         if (
             state.initializedSwipers.has(element) ||
@@ -1262,9 +1174,6 @@
 
         if (typeof window.Swiper !== "function") {
             element.classList.add("site-library-fallback-active");
-            if (element.dataset.swiper === "about-testimonials") {
-                bindSwiperScrollFallback(element);
-            }
             return null;
         }
 
@@ -1281,16 +1190,9 @@
                 pauseHeroOnFocus(element, swiper);
             }
 
-            if (element.dataset.swiper === "about-testimonials") {
-                bindManualSwiperControls(element, swiper);
-            }
-
             return swiper;
         } catch (error) {
             element.classList.add("site-library-fallback-active");
-            if (element.dataset.swiper === "about-testimonials") {
-                bindSwiperScrollFallback(element);
-            }
             return null;
         }
     }

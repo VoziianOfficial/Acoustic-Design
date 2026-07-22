@@ -343,11 +343,35 @@
     overflow: hidden;
 }
 
+.about-testimonials__slider.is-about-testimonials-ready {
+    cursor: grab;
+}
+
+.about-testimonials__slider.is-about-testimonials-dragging {
+    cursor: grabbing;
+}
+
+.about-testimonials__slider.is-about-testimonials-ready .swiper-wrapper {
+    display: flex;
+    gap: 0;
+    overflow: visible;
+    scroll-snap-type: none;
+    transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+    touch-action: pan-y;
+    will-change: transform;
+}
+
+.about-testimonials__slider.is-about-testimonials-dragging .swiper-wrapper {
+    transition-duration: 0ms;
+}
+
 .about-testimonials__slider:not(.swiper-initialized) .about-testimonial {
     flex-basis: 100%;
 }
 
 .about-testimonial {
+    flex: 0 0 100%;
+    min-width: 100%;
     display: grid;
     justify-items: center;
     gap: clamp(30px, 4vw, 48px);

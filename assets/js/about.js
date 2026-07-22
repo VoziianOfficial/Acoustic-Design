@@ -214,6 +214,146 @@
             });
     }
 
+    function initializeTestimonialsSlider() {
+        const shell = document.querySelector(
+            ".about-testimonials__slider-shell"
+        );
+
+        if (
+            !shell ||
+            shell.dataset.aboutTestimonialsReady === "true"
+        ) {
+            return;
+        }
+
+        const slider = shell.querySelector(
+            ".about-testimonials__slider"
+        );
+        const wrapper = shell.querySelector(".swiper-wrapper");
+        const slides = Array.from(
+            shell.querySelectorAll(".about-testimonial")
+        );
+        const previous = shell.querySelector(
+            ".about-testimonials__button--prev"
+        );
+        const next = shell.querySelector(
+            ".about-testimonials__button--next"
+        );
+
+        if (!slider || !wrapper || slides.length !== 3) {
+            return;
+        }
+
+        let activeIndex = 0;
+        let startX = 0;
+        let dragX = 0;
+        let dragging = false;
+
+        function render() {
+            wrapper.style.transform = `translate3d(-${activeIndex * 100}%, 0, 0)`;
+
+            slides.forEach(function (slide, index) {
+                slide.setAttribute(
+                    "aria-hidden",
+                    index === activeIndex ? "false" : "true"
+                );
+            });
+        }
+
+        function goTo(index) {
+            activeIndex =
+                (index + slides.length) % slides.length;
+            render();
+        }
+
+        function finishDrag() {
+            if (!dragging) {
+                return;
+            }
+
+            const distance = dragX - startX;
+            dragging = false;
+            slider.classList.remove(
+                "is-about-testimonials-dragging"
+            );
+
+            if (Math.abs(distance) > 48) {
+                goTo(
+                    activeIndex + (distance < 0 ? 1 : -1)
+                );
+                return;
+            }
+
+            render();
+        }
+
+        shell.dataset.aboutTestimonialsReady = "true";
+        slider.classList.add("is-about-testimonials-ready");
+        slider.setAttribute("tabindex", "0");
+
+        if (previous) {
+            previous.addEventListener("click", function (event) {
+                event.preventDefault();
+                goTo(activeIndex - 1);
+            });
+        }
+
+        if (next) {
+            next.addEventListener("click", function (event) {
+                event.preventDefault();
+                goTo(activeIndex + 1);
+            });
+        }
+
+        slider.addEventListener("pointerdown", function (event) {
+            if (event.button && event.button !== 0) {
+                return;
+            }
+
+            dragging = true;
+            startX = event.clientX;
+            dragX = event.clientX;
+            slider.classList.add(
+                "is-about-testimonials-dragging"
+            );
+        });
+
+        slider.addEventListener("pointermove", function (event) {
+            if (!dragging) {
+                return;
+            }
+
+            dragX = event.clientX;
+            const offset =
+                ((dragX - startX) / slider.clientWidth) * 100;
+
+            wrapper.style.transform = `translate3d(calc(-${activeIndex * 100}% + ${offset}%), 0, 0)`;
+        });
+
+        slider.addEventListener("pointerup", finishDrag);
+        slider.addEventListener("pointercancel", finishDrag);
+        slider.addEventListener("pointerleave", finishDrag);
+
+        slider.addEventListener("keydown", function (event) {
+            if (
+                event.key !== "ArrowLeft" &&
+                event.key !== "ArrowRight"
+            ) {
+                return;
+            }
+
+            event.preventDefault();
+
+            if (event.key === "ArrowLeft") {
+                goTo(activeIndex - 1);
+            } else {
+                goTo(activeIndex + 1);
+            }
+        });
+
+        render();
+    }
+
     function initializeIndependentDisclosure(config) {
         const disclaimer = document.querySelector(
             ".about-independent__disclaimer"
@@ -231,6 +371,7 @@
         initializeIndependentDisclosure(config);
         initializeServiceRowKeyboard();
         initializeMosaicFocus();
+        initializeTestimonialsSlider();
         initializeImageStates();
         helpers.refreshIcons(document);
         helpers.safeRefreshAos();
