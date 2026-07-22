@@ -75,6 +75,320 @@
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
     }
 
+    let SITE_IDENTITY = {
+        replaceName: "Echoform",
+        name: "Echoform",
+        legalName: "Echoform",
+        email: "",
+        phone: "",
+        address: "",
+        siteUrl: "",
+        copyrightYear: String(new Date().getFullYear())
+    };
+
+    function normalizePhoneHref(value) {
+        const phone = String(value || "").trim();
+
+        if (
+            !phone ||
+            phone.includes("[") ||
+            phone.includes("]")
+        ) {
+            return "";
+        }
+
+        const prefix = phone.startsWith("+") ? "+" : "";
+        const digits = phone.replace(/\D/g, "");
+
+        if (digits.length < 7) {
+            return "";
+        }
+
+        return prefix + digits;
+    }
+
+    function validPhone(value) {
+        return normalizePhoneHref(value) !== "";
+    }
+
+    function replaceIdentityString(value, replaceOldName) {
+        let result = String(value ?? "");
+
+        const replacements = {
+            "[BRAND_NAME]": SITE_IDENTITY.name,
+            "[COMPANY_NAME]": SITE_IDENTITY.name,
+            "[LEGAL_COMPANY_NAME]": SITE_IDENTITY.legalName,
+            "[CORPORATE_EMAIL]": SITE_IDENTITY.email,
+            "[COMPANY_PHONE]": SITE_IDENTITY.phone,
+            "[COMPANY_ADDRESS]": SITE_IDENTITY.address,
+            "[SITE_URL]": SITE_IDENTITY.siteUrl
+        };
+
+        Object.entries(replacements).forEach(function ([token, replacement]) {
+            result = result.split(token).join(String(replacement || ""));
+        });
+
+        if (
+            replaceOldName !== false &&
+            SITE_IDENTITY.replaceName &&
+            SITE_IDENTITY.replaceName !== SITE_IDENTITY.name
+        ) {
+            result = result
+                .split(SITE_IDENTITY.replaceName.toUpperCase())
+                .join(SITE_IDENTITY.name.toUpperCase());
+
+            result = result
+                .split(SITE_IDENTITY.replaceName)
+                .join(SITE_IDENTITY.name);
+        }
+
+        return result;
+    }
+
+    function rewriteConfigValue(value) {
+        if (Array.isArray(value)) {
+            return value.map(rewriteConfigValue);
+        }
+
+        if (isObject(value)) {
+            return Object.fromEntries(
+                Object.entries(value).map(function ([key, childValue]) {
+                    return [key, rewriteConfigValue(childValue)];
+                })
+            );
+        }
+
+        if (typeof value === "string") {
+            return replaceIdentityString(value, true);
+        }
+
+        return value;
+    }
+
+    function prepareSiteIdentity() {
+        if (!config || !isObject(config)) {
+            return;
+        }
+
+        const site = isObject(config.site)
+            ? config.site
+            : {};
+
+        const currentBrand = isObject(config.brand)
+            ? config.brand
+            : {};
+
+        const currentCompany = isObject(config.company)
+            ? config.company
+            : {};
+
+        const replaceName = String(
+            site.replaceName ||
+            currentBrand.name ||
+            "Echoform"
+        ).trim();
+
+        const name = String(
+            site.name ||
+            currentBrand.name ||
+            replaceName
+        ).trim();
+
+        const legalName = String(
+            site.legalName ||
+            currentCompany.legalName ||
+            currentBrand.legalName ||
+            name
+        ).trim();
+
+        const email = String(
+            site.email ||
+            currentCompany.email ||
+            ""
+        ).trim();
+
+        const phone = String(
+            site.phone ||
+            currentCompany.phone ||
+            ""
+        ).trim();
+
+        const address = String(
+            site.address ||
+            currentCompany.address ||
+            ""
+        ).trim();
+
+        const siteUrl = String(
+            site.url ||
+            site.siteUrl ||
+            currentCompany.siteUrl ||
+            ""
+        ).trim().replace(/\/+$/, "");
+
+        const copyrightYear = String(
+            site.copyrightYear ||
+            new Date().getFullYear()
+        );
+
+        SITE_IDENTITY = {
+            replaceName,
+            name,
+            legalName,
+            email,
+            phone,
+            address,
+            siteUrl,
+            copyrightYear
+        };
+
+        /*
+         * Обновляем все старые строки внутри config:
+         * Echoform, placeholders, тексты CTA, disclaimer и т.д.
+         */
+        Object.keys(config).forEach(function (key) {
+            if (key === "site") {
+                return;
+            }
+
+            config[key] = rewriteConfigValue(config[key]);
+        });
+
+        config.brand = isObject(config.brand)
+            ? config.brand
+            : {};
+
+        config.company = isObject(config.company)
+            ? config.company
+            : {};
+
+        /*
+         * Старые компоненты сайта продолжают читать brand/company,
+         * но значения всегда берутся из одного site-объекта.
+         */
+        config.brand.name = name;
+        config.brand.logoText = name.toUpperCase();
+        config.brand.logoAlt = name;
+        config.brand.legalName = legalName;
+
+        config.company.name = name;
+        config.company.legalName = legalName;
+        config.company.email = email;
+        config.company.phone = phone;
+        config.company.address = address;
+        config.company.siteUrl = siteUrl;
+        config.company.copyrightText =
+            `© ${copyrightYear} ${legalName}. All rights reserved.`;
+
+        config.site = {
+            ...site,
+            ...SITE_IDENTITY,
+            url: siteUrl
+        };
+    }
+
+    prepareSiteIdentity();
+
+    function validConfiguredText(value) {
+        return (
+            typeof value === "string" &&
+            value.trim() !== "" &&
+            !/^\[[A-Z0-9_]+\]$/.test(value.trim())
+        );
+    }
+
+    function getCompanyName() {
+        const companyName = config.company?.name;
+        const brandName = config.brand?.name;
+
+        if (validConfiguredText(companyName) && companyName !== "Echoform") {
+            return companyName;
+        }
+
+        if (validConfiguredText(brandName)) {
+            return brandName;
+        }
+
+        if (validConfiguredText(companyName)) {
+            return companyName;
+        }
+
+        return "Echoform";
+    }
+
+    function getCompanyLegalName() {
+        if (validConfiguredText(config.company?.legalName)) {
+            return config.company.legalName;
+        }
+
+        if (validConfiguredText(config.brand?.legalName)) {
+            return config.brand.legalName;
+        }
+
+        return getCompanyName();
+    }
+
+    function getCompanyEmail() {
+        return String(config.company?.email || config.contact?.email || "");
+    }
+
+    function getCompanyAddress() {
+        return String(config.company?.address || config.contact?.address || "");
+    }
+
+    function getCompanyPhone() {
+        return String(config.company?.phone || config.contact?.phone || "");
+    }
+
+    function getCompanyPhoneDisplay() {
+        return String(
+            config.company?.phoneDisplay ||
+            config.contact?.phoneDisplay ||
+            getCompanyPhone()
+        );
+    }
+
+    function toTelHref(value) {
+        if (!validConfiguredText(value)) {
+            return "";
+        }
+
+        const normalized = String(value).replace(/[^\d+]/g, "");
+
+        return normalized ? `tel:${normalized}` : "";
+    }
+
+    function replaceConfiguredTokens(value) {
+        if (typeof value !== "string" || !config) {
+            return value;
+        }
+
+        const replacements = {
+            "[BRAND_NAME]": getCompanyName(),
+            "[COMPANY_NAME]": getCompanyName(),
+            "[LEGAL_COMPANY_NAME]": getCompanyLegalName(),
+            "[CORPORATE_EMAIL]": getCompanyEmail(),
+            "[COMPANY_EMAIL]": getCompanyEmail(),
+            "[COMPANY_PHONE]": getCompanyPhoneDisplay(),
+            "[COMPANY_ADDRESS]": getCompanyAddress(),
+            "[SITE_URL]": String(config.company?.siteUrl || "")
+        };
+
+        let output = value;
+
+        Object.entries(replacements).forEach(function ([token, replacement]) {
+            output = output.replaceAll(token, replacement || token);
+        });
+
+        const companyName = getCompanyName();
+
+        if (companyName && companyName !== "Echoform") {
+            output = output.replaceAll("Echoform", companyName);
+        }
+
+        return output;
+    }
+
     function normalizePageKey() {
         const page = document.body.dataset.page || "home";
         const service = document.body.dataset.service || "";
@@ -129,6 +443,7 @@
         const brand = config.brand;
         const logoText = String(brand.logoText || brand.name || "ECHOFORM");
         const logoIconPath = String(
+            brand.logoImagePath ||
             brand.logoIconPath ||
             brand.faviconPath ||
             ""
@@ -288,6 +603,28 @@
             .join("");
     }
 
+    function buildHeaderPhone(className) {
+        const phone = config.company.phone;
+        const phoneHref = normalizePhoneHref(phone);
+
+        if (!phoneHref) {
+            return "";
+        }
+
+        return `
+        <a
+            class="site-button site-button--secondary ${escapeAttribute(
+            className || ""
+        )}"
+            href="tel:${escapeAttribute(phoneHref)}"
+            aria-label="Call ${escapeAttribute(config.brand.name)}"
+        >
+            <i data-lucide="phone" aria-hidden="true"></i>
+            <span>${escapeHtml(phone)}</span>
+        </a>
+    `;
+    }
+
     function renderHeader() {
         const target = document.querySelector("[data-site-header]");
 
@@ -305,6 +642,9 @@
             </ul>
           </nav>
           <div class="site-header__actions">
+            ${buildHeaderPhone(
+                "site-button--small site-header__phone"
+            )}
             <a
               class="site-button site-button--primary site-button--small site-header__cta"
               href="${escapeAttribute(config.header.ctaUrl)}"
@@ -349,6 +689,9 @@
             </ul>
           </nav>
           <div class="site-mobile-menu__footer">
+            ${buildHeaderPhone(
+                "site-mobile-menu__phone"
+            )}
             <a
               class="site-button site-button--primary"
               href="${escapeAttribute(config.header.ctaUrl)}"
@@ -359,6 +702,44 @@
           </div>
         </div>
       </div>
+    `;
+    }
+
+    function buildFooterContact() {
+        const email = config.company.email;
+        const phone = config.company.phone;
+        const address = config.company.address;
+
+        const phoneHref = normalizePhoneHref(phone);
+
+        const emailMarkup = validEmail(email)
+            ? `
+            <a href="mailto:${escapeAttribute(email)}">
+                ${escapeHtml(email)}
+            </a>
+        `
+            : email
+                ? `<span>${escapeHtml(email)}</span>`
+                : "";
+
+        const phoneMarkup = phoneHref
+            ? `
+            <a href="tel:${escapeAttribute(phoneHref)}">
+                ${escapeHtml(phone)}
+            </a>
+        `
+            : "";
+
+        const addressMarkup = address
+            ? `<span>${escapeHtml(address)}</span>`
+            : "";
+
+        return `
+        <div class="site-footer__contact">
+            ${emailMarkup}
+            ${phoneMarkup}
+            ${addressMarkup}
+        </div>
     `;
     }
 
@@ -395,21 +776,6 @@
         <ul class="site-footer__links">
           ${links}
         </ul>
-      </div>
-    `;
-    }
-
-    function buildFooterContact() {
-        const email = config.company.email;
-        const address = config.company.address;
-        const emailMarkup = validEmail(email)
-            ? `<a href="mailto:${escapeAttribute(email)}">${escapeHtml(email)}</a>`
-            : `<span>${escapeHtml(email)}</span>`;
-
-        return `
-      <div class="site-footer__contact">
-        ${emailMarkup}
-        <span>${escapeHtml(address)}</span>
       </div>
     `;
     }
@@ -454,11 +820,13 @@
             return;
         }
 
-        const columns = config.footer.columns
-            .map(function (column) {
-                return buildFooterColumn(column);
-            })
-            .join("");
+        const columns = Array.isArray(config.footer?.columns)
+            ? config.footer.columns
+                .map(function (column) {
+                    return buildFooterColumn(column);
+                })
+                .join("")
+            : "";
 
         target.innerHTML = `
       <footer class="site-footer">
@@ -476,8 +844,8 @@
             ${escapeHtml(config.aggregatorDisclaimer)}
           </p>
           <div class="site-footer__bottom">
-            <span>${escapeHtml(config.company.copyrightText)}</span>
-            <span>${escapeHtml(config.brand.tagline)}</span>
+            <span>${escapeHtml(replaceConfiguredTokens(config.company.copyrightText))}</span>
+            <span>${escapeHtml(replaceConfiguredTokens(config.brand.tagline))}</span>
           </div>
         </div>
       </footer>
@@ -527,63 +895,439 @@
         });
     }
 
-    function applyConfigBindings(root) {
+    function applyConfiguredTextNodes(root) {
         const scope = root || document;
+        const walker = document.createTreeWalker(
+            scope,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: function (node) {
+                    const parent = node.parentElement;
 
-        scope.querySelectorAll("[data-config-text]").forEach(function (element) {
-            const value = resolveConfigPath(element.dataset.configText);
+                    if (
+                        !parent ||
+                        parent.closest("script, style, textarea, input, select")
+                    ) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
 
-            if (value !== undefined && value !== null) {
-                element.textContent = String(value);
-            }
-        });
-
-        scope.querySelectorAll("[data-config-html]").forEach(function (element) {
-            const value = resolveConfigPath(element.dataset.configHtml);
-
-            if (value !== undefined && value !== null) {
-                element.innerHTML = escapeHtml(String(value));
-            }
-        });
-
-        scope.querySelectorAll("[data-config-href]").forEach(function (element) {
-            const value = resolveConfigPath(element.dataset.configHref);
-
-            if (typeof value === "string") {
-                element.setAttribute("href", value);
-            }
-        });
-
-        scope.querySelectorAll("[data-config-src]").forEach(function (element) {
-            const value = resolveConfigPath(element.dataset.configSrc);
-
-            if (typeof value === "string") {
-                element.setAttribute("src", value);
-            }
-        });
-
-        scope.querySelectorAll("[data-config-alt]").forEach(function (element) {
-            const value = resolveConfigPath(element.dataset.configAlt);
-
-            if (typeof value === "string") {
-                element.setAttribute("alt", value);
-            }
-        });
-
-        scope.querySelectorAll("[data-config-email]").forEach(function (element) {
-            const email = config.company.email;
-            element.textContent = email;
-
-            if (element.tagName === "A") {
-                if (validEmail(email)) {
-                    element.setAttribute("href", `mailto:${email}`);
-                } else {
-                    element.removeAttribute("href");
-                    element.setAttribute("aria-disabled", "true");
+                    return NodeFilter.FILTER_ACCEPT;
                 }
+            }
+        );
+        const textNodes = [];
+
+        while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+        }
+
+        textNodes.forEach(function (node) {
+            const nextValue = replaceConfiguredTokens(node.nodeValue);
+
+            if (nextValue !== node.nodeValue) {
+                node.nodeValue = nextValue;
             }
         });
     }
+
+    function applyConfiguredAttributes(root) {
+        const scope = root || document;
+        const selector = [
+            "[title]",
+            "[aria-label]",
+            "[alt]",
+            "[placeholder]",
+            'meta[content]',
+            'input[value]',
+            'button[value]'
+        ].join(",");
+
+        scope.querySelectorAll(selector).forEach(function (element) {
+            ["title", "aria-label", "alt", "placeholder", "content", "value"].forEach(
+                function (attribute) {
+                    if (!element.hasAttribute(attribute)) {
+                        return;
+                    }
+
+                    const current = element.getAttribute(attribute);
+                    const nextValue = replaceConfiguredTokens(current);
+
+                    if (nextValue !== current) {
+                        element.setAttribute(attribute, nextValue);
+                    }
+                }
+            );
+        });
+    }
+
+    function applyConfiguredStructuredData(root) {
+        const scope = root || document;
+
+        scope
+            .querySelectorAll('script[type="application/ld+json"]')
+            .forEach(function (script) {
+                script.textContent = replaceConfiguredTokens(script.textContent);
+            });
+    }
+
+    function applyConfiguredContactLinks(root) {
+        const scope = root || document;
+        const email = getCompanyEmail();
+        const phone = getCompanyPhone();
+        const phoneDisplay = getCompanyPhoneDisplay();
+        const phoneHref = toTelHref(phone);
+
+        if (validEmail(email)) {
+            scope.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
+                link.setAttribute("href", `mailto:${email}`);
+
+                if (
+                    link.textContent.trim() === "" ||
+                    link.textContent.includes("@") ||
+                    link.textContent.includes("[CORPORATE_EMAIL]")
+                ) {
+                    link.textContent = email;
+                }
+            });
+        }
+
+        if (phoneHref) {
+            scope.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
+                link.setAttribute("href", phoneHref);
+
+                if (
+                    link.textContent.trim() === "" ||
+                    /^[+\d\s().-]+$/.test(link.textContent.trim()) ||
+                    link.textContent.includes("[COMPANY_PHONE]")
+                ) {
+                    link.textContent = phoneDisplay;
+                }
+            });
+        }
+    }
+
+    function applyGlobalContactConfig(root) {
+        const scope = root || document;
+
+        if (scope === document) {
+            document.title = replaceConfiguredTokens(document.title);
+        }
+
+        applyConfiguredTextNodes(scope);
+        applyConfiguredAttributes(scope);
+        applyConfiguredStructuredData(scope);
+        applyConfiguredContactLinks(scope);
+    }
+
+    function setContactElementValue(element, value, href) {
+        const stringValue = String(value || "");
+
+        /*
+         * В legal-карточках внутри ссылки есть иконка и span.
+         * Поэтому не удаляем всю внутреннюю разметку.
+         */
+        const nestedText = element.querySelector(
+            "span:last-child"
+        );
+
+        if (
+            nestedText &&
+            element.querySelector("i, svg")
+        ) {
+            nestedText.textContent = stringValue;
+        } else {
+            element.textContent = stringValue;
+        }
+
+        if (element.tagName !== "A") {
+            return;
+        }
+
+        if (href) {
+            element.setAttribute("href", href);
+            element.removeAttribute("aria-disabled");
+        } else {
+            element.removeAttribute("href");
+            element.setAttribute("aria-disabled", "true");
+        }
+    }
+
+    function replaceJsonIdentity(value) {
+        if (Array.isArray(value)) {
+            return value.map(replaceJsonIdentity);
+        }
+
+        if (isObject(value)) {
+            return Object.fromEntries(
+                Object.entries(value).map(function ([key, childValue]) {
+                    return [
+                        key,
+                        replaceJsonIdentity(childValue)
+                    ];
+                })
+            );
+        }
+
+        if (typeof value === "string") {
+            return replaceIdentityString(value, true);
+        }
+
+        return value;
+    }
+
+    function replaceIdentityInDocument(root) {
+        const scope = root || document;
+
+        /*
+         * Заменяет Echoform и placeholders в обычном видимом тексте.
+         */
+        const walker = document.createTreeWalker(
+            scope,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: function (node) {
+                    const parent = node.parentElement;
+
+                    if (!parent) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+
+                    if (
+                        parent.closest(
+                            "script, style, noscript, textarea, code, pre"
+                        )
+                    ) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
+
+        const textNodes = [];
+        let node = walker.nextNode();
+
+        while (node) {
+            textNodes.push(node);
+            node = walker.nextNode();
+        }
+
+        textNodes.forEach(function (textNode) {
+            const currentValue = textNode.nodeValue;
+            const newValue = replaceIdentityString(
+                currentValue,
+                true
+            );
+
+            if (currentValue !== newValue) {
+                textNode.nodeValue = newValue;
+            }
+        });
+
+        /*
+         * title, meta description, Open Graph, alt, aria-label.
+         */
+        scope
+            .querySelectorAll(
+                "[title], [aria-label], [aria-description], " +
+                "[alt], [placeholder], [content]"
+            )
+            .forEach(function (element) {
+                [
+                    "title",
+                    "aria-label",
+                    "aria-description",
+                    "alt",
+                    "placeholder",
+                    "content"
+                ].forEach(function (attributeName) {
+                    if (!element.hasAttribute(attributeName)) {
+                        return;
+                    }
+
+                    const currentValue =
+                        element.getAttribute(attributeName);
+
+                    const newValue = replaceIdentityString(
+                        currentValue,
+                        true
+                    );
+
+                    if (newValue !== currentValue) {
+                        element.setAttribute(
+                            attributeName,
+                            newValue
+                        );
+                    }
+                });
+            });
+
+        /*
+         * URL placeholders. Название в путях картинок не трогаем,
+         * чтобы echoform-logo.svg не превратился в битый путь.
+         */
+        scope
+            .querySelectorAll("[href], [src], [action]")
+            .forEach(function (element) {
+                ["href", "src", "action"].forEach(function (attributeName) {
+                    if (!element.hasAttribute(attributeName)) {
+                        return;
+                    }
+
+                    const currentValue =
+                        element.getAttribute(attributeName);
+
+                    const newValue = replaceIdentityString(
+                        currentValue,
+                        false
+                    );
+
+                    if (newValue !== currentValue) {
+                        element.setAttribute(
+                            attributeName,
+                            newValue
+                        );
+                    }
+                });
+            });
+
+        /*
+         * Organization, WebSite, ContactPage и другой JSON-LD.
+         */
+        scope
+            .querySelectorAll(
+                'script[type="application/ld+json"]'
+            )
+            .forEach(function (script) {
+                try {
+                    const json = JSON.parse(script.textContent);
+
+                    script.textContent = JSON.stringify(
+                        replaceJsonIdentity(json),
+                        null,
+                        2
+                    );
+                } catch (error) {
+                    /*
+                     * Не ломаем страницу из-за ошибочного JSON-LD.
+                     */
+                }
+            });
+    }
+
+    function applyConfigBindings(root) {
+        const scope = root || document;
+
+        scope
+            .querySelectorAll("[data-config-text]")
+            .forEach(function (element) {
+                const value = resolveConfigPath(
+                    element.dataset.configText
+                );
+
+                if (value !== undefined && value !== null) {
+                    element.textContent = replaceIdentityString(
+                        String(value),
+                        true
+                    );
+                }
+            });
+
+        scope
+            .querySelectorAll("[data-config-html]")
+            .forEach(function (element) {
+                const value = resolveConfigPath(
+                    element.dataset.configHtml
+                );
+
+                if (value !== undefined && value !== null) {
+                    element.textContent = replaceIdentityString(
+                        String(value),
+                        true
+                    );
+                }
+            });
+
+        scope
+            .querySelectorAll("[data-config-href]")
+            .forEach(function (element) {
+                const value = resolveConfigPath(
+                    element.dataset.configHref
+                );
+
+                if (typeof value === "string") {
+                    element.setAttribute(
+                        "href",
+                        replaceIdentityString(value, false)
+                    );
+                }
+            });
+
+        scope
+            .querySelectorAll("[data-config-src]")
+            .forEach(function (element) {
+                const value = resolveConfigPath(
+                    element.dataset.configSrc
+                );
+
+                if (typeof value === "string") {
+                    element.setAttribute(
+                        "src",
+                        replaceIdentityString(value, false)
+                    );
+                }
+            });
+
+        scope
+            .querySelectorAll("[data-config-alt]")
+            .forEach(function (element) {
+                const value = resolveConfigPath(
+                    element.dataset.configAlt
+                );
+
+                if (typeof value === "string") {
+                    element.setAttribute(
+                        "alt",
+                        replaceIdentityString(value, true)
+                    );
+                }
+            });
+
+        scope
+            .querySelectorAll("[data-config-email]")
+            .forEach(function (element) {
+                const email = config.company.email;
+
+                setContactElementValue(
+                    element,
+                    email,
+                    validEmail(email)
+                        ? `mailto:${email}`
+                        : ""
+                );
+            });
+
+        scope
+            .querySelectorAll("[data-config-phone]")
+            .forEach(function (element) {
+                const phone = config.company.phone;
+                const normalizedPhone =
+                    normalizePhoneHref(phone);
+
+                setContactElementValue(
+                    element,
+                    phone,
+                    normalizedPhone
+                        ? `tel:${normalizedPhone}`
+                        : ""
+                );
+            });
+
+        replaceIdentityInDocument(scope);
+    }
+
+
 
     function applyBrandAssets() {
         const faviconPath = config.brand?.faviconPath;
@@ -1851,7 +2595,7 @@
             return;
         }
 
-        document.title = seo.title;
+        document.title = replaceConfiguredTokens(seo.title);
 
         const description = document.querySelector(
             'meta[name="description"]'
@@ -1870,34 +2614,34 @@
         );
 
         if (description) {
-            description.setAttribute("content", seo.description);
+            description.setAttribute("content", replaceConfiguredTokens(seo.description));
         }
 
         if (ogTitle) {
             ogTitle.setAttribute(
                 "content",
-                seo.openGraphTitle || seo.title
+                replaceConfiguredTokens(seo.openGraphTitle || seo.title)
             );
         }
 
         if (ogDescription) {
             ogDescription.setAttribute(
                 "content",
-                seo.openGraphDescription || seo.description
+                replaceConfiguredTokens(seo.openGraphDescription || seo.description)
             );
         }
 
         if (twitterTitle) {
             twitterTitle.setAttribute(
                 "content",
-                seo.openGraphTitle || seo.title
+                replaceConfiguredTokens(seo.openGraphTitle || seo.title)
             );
         }
 
         if (twitterDescription) {
             twitterDescription.setAttribute(
                 "content",
-                seo.openGraphDescription || seo.description
+                replaceConfiguredTokens(seo.openGraphDescription || seo.description)
             );
         }
 
@@ -1998,6 +2742,7 @@
             initializeSwiper: initializeSwiper,
             safeRefreshAos: safeRefreshAos,
             applyConfigBindings: applyConfigBindings,
+            applyGlobalContactConfig: applyGlobalContactConfig,
             renderConfiguredSelectOptions: renderConfiguredSelectOptions,
             reducedMotion: state.reducedMotion
         };
@@ -2017,31 +2762,164 @@
         }
     }
 
-    async function initializeApplication() {
-        if (!config || !isObject(config)) {
-            document.documentElement.classList.add("config-error");
+    function renderAutomaticCompanyContacts(root) {
+        const scope = root || document;
+        const phone = config.company.phone;
+        const phoneHref = normalizePhoneHref(phone);
+
+        if (!phoneHref) {
             return;
         }
 
+        /*
+         * Contact page.
+         */
+        const contactDetails = scope.querySelector(
+            ".contact-main__details"
+        );
+
+        if (
+            contactDetails &&
+            !contactDetails.querySelector(
+                "[data-generated-company-phone]"
+            )
+        ) {
+            const phoneCard = `
+            <article data-generated-company-phone>
+                <span class="contact-main__detail-icon">
+                    <i data-lucide="phone" aria-hidden="true"></i>
+                </span>
+
+                <div>
+                    <h3>Phone</h3>
+
+                    <a href="tel:${escapeAttribute(phoneHref)}">
+                        ${escapeHtml(phone)}
+                    </a>
+
+                    <p>
+                        For company and inquiry communication.
+                    </p>
+                </div>
+            </article>
+        `;
+
+            const firstCard = contactDetails.firstElementChild;
+
+            if (firstCard) {
+                firstCard.insertAdjacentHTML(
+                    "afterend",
+                    phoneCard
+                );
+            } else {
+                contactDetails.insertAdjacentHTML(
+                    "beforeend",
+                    phoneCard
+                );
+            }
+        }
+
+        /*
+         * Privacy, Terms и Cookie contact cards.
+         */
+        scope
+            .querySelectorAll(".legal-contact-card__details")
+            .forEach(function (container) {
+                if (
+                    container.querySelector(
+                        "[data-generated-company-phone]"
+                    )
+                ) {
+                    return;
+                }
+
+                container.insertAdjacentHTML(
+                    "beforeend",
+                    `
+                    <a
+                        href="tel:${escapeAttribute(phoneHref)}"
+                        data-generated-company-phone
+                    >
+                        <i
+                            data-lucide="phone"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span>${escapeHtml(phone)}</span>
+                    </a>
+                `
+                );
+            });
+
+        /*
+         * Блок Who Handles Your Information.
+         */
+        scope
+            .querySelectorAll(".legal-company-card > div")
+            .forEach(function (container) {
+                if (
+                    container.querySelector(
+                        "[data-generated-company-phone]"
+                    )
+                ) {
+                    return;
+                }
+
+                container.insertAdjacentHTML(
+                    "beforeend",
+                    `
+                    <a
+                        href="tel:${escapeAttribute(phoneHref)}"
+                        data-generated-company-phone
+                    >
+                        ${escapeHtml(phone)}
+                    </a>
+                `
+                );
+            });
+    }
+
+    async function initializeApplication() {
+        if (!config || !isObject(config)) {
+            document.documentElement.classList.add(
+                "config-error"
+            );
+            return;
+        }
+
+        /*
+         * Конфиг уже синхронизирован через prepareSiteIdentity().
+         */
         renderHeader();
         renderFooter();
         renderSiteCtas();
         applyBrandAssets();
+
+        /*
+         * Меняем статический HTML, title, meta и JSON-LD.
+         */
         applyConfigBindings();
         renderConfiguredSelectOptions();
         applySeoFromConfig();
-        refreshIcons();
 
         await initializePageModule();
 
+        /*
+         * Page module мог добавить новые элементы,
+         * поэтому применяем данные ещё раз.
+         */
+        renderAutomaticCompanyContacts();
         applyConfigBindings();
         renderConfiguredSelectOptions();
+
         refreshIcons();
         initializeGlobalInteractions();
         initializeAos();
         safeRefreshAos();
 
-        document.documentElement.classList.add("app-ready");
+        document.documentElement.classList.add(
+            "app-ready"
+        );
     }
 
     window.ECHOFORM_APP = {
@@ -2054,7 +2932,13 @@
         initializeForms: initializeForms,
         safeRefreshAos: safeRefreshAos,
         applyConfigBindings: applyConfigBindings,
-        renderConfiguredSelectOptions: renderConfiguredSelectOptions
+        applyGlobalContactConfig: applyGlobalContactConfig,
+        renderConfiguredSelectOptions: renderConfiguredSelectOptions,
+        renderAutomaticCompanyContacts:
+            renderAutomaticCompanyContacts,
+
+        replaceIdentityInDocument:
+            replaceIdentityInDocument,
     };
 
     if (document.readyState === "loading") {

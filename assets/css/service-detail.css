@@ -2388,6 +2388,10 @@
 }
 
 @media (max-width: 767px) {
+    .service-pillars {
+        display: none;
+    }
+
     .service-detail-hero {
         min-height: 720px;
         background-position: center;

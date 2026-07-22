@@ -1,10 +1,22 @@
 window.ECHOFORM_CONFIG = {
+
+    "site": {
+        "replaceName": "Echoform",
+        "name": "Echoform",
+        "legalName": "Echoform AB",
+        "email": "hello@echoform.com",
+        "phone": "+46 70 123 45 67",
+        "address": "Stockholm, Sweden",
+        "url": "https://example.com",
+        "copyrightYear": "2026"
+    },
     "brand": {
         "name": "Echoform",
         "legalName": "[LEGAL_COMPANY_NAME]",
         "tagline": "Shape the way your room sounds.",
         "shortDescription": "An independent acoustic design information, planning, consultation, and inquiry platform for clearer, more intentional rooms.",
         "logoText": "ECHOFORM",
+        "logoImagePath": "assets/images/echoform-favicon.svg",
         "logoIconPath": "assets/images/echoform-favicon.svg",
         "logoIconAlt": "",
         "accentLetter": "O",
@@ -16,7 +28,11 @@ window.ECHOFORM_CONFIG = {
         "openGraphImage": "assets/images/home-problem-detail.webp"
     },
     "company": {
+        "name": "Echoform",
+        "legalName": "[LEGAL_COMPANY_NAME]",
         "email": "[CORPORATE_EMAIL]",
+        "phone": "[COMPANY_PHONE]",
+        "phoneDisplay": "[COMPANY_PHONE]",
         "address": "[COMPANY_ADDRESS]",
         "siteUrl": "[SITE_URL]",
         "copyrightText": "© 2026 [LEGAL_COMPANY_NAME]. All rights reserved.",

@@ -172,7 +172,7 @@ function loadSiteConfig(): array
 
     if (
         !preg_match(
-            '/window\.ECHOFORM_CONFIG\s*=\s*(\{.*\})\s*;\s*$/s',
+            '/window\.ECHOFORM_CONFIG\s*=\s*(\{.*?\})\s*;/s',
             $source,
             $matches
         )
@@ -187,6 +187,19 @@ function loadSiteConfig(): array
     }
 
     return is_array($decoded) ? $decoded : [];
+}
+
+function loadSiteConfigSource(): string
+{
+    $configPath = __DIR__ . '/config/config.js';
+
+    if (!is_file($configPath) || !is_readable($configPath)) {
+        return '';
+    }
+
+    $source = file_get_contents($configPath);
+
+    return $source === false ? '' : $source;
 }
 
 function configString(array $config, array $path): string
@@ -204,22 +217,107 @@ function configString(array $config, array $path): string
     return is_scalar($value) ? trim((string) $value) : '';
 }
 
-function configuredRecipientEmail(): string
+function configSourceString(array $path): string
 {
-    $configEmail = configString(loadSiteConfig(), ['company', 'email']);
+    $source = loadSiteConfigSource();
+
+    if ($source === '' || count($path) !== 2) {
+        return '';
+    }
+
+    $section = preg_quote($path[0], '/');
+    $key = preg_quote($path[1], '/');
+    $pattern = '/["\']' . $section . '["\']\s*:\s*\{.*?["\']' . $key . '["\']\s*:\s*(["\'])(.*?)\1/s';
+
+    if (!preg_match($pattern, $source, $matches)) {
+        return '';
+    }
+
+    return trim(stripcslashes($matches[2]));
+}
+
+function configuredCompanyName(): string
+{
+    $config = loadSiteConfig();
+    $companyName = configString($config, ['company', 'name']);
+    $brandName = configString($config, ['brand', 'name']);
+
+    if ($companyName === '') {
+        $companyName = configSourceString(['company', 'name']);
+    }
+
+    if ($brandName === '') {
+        $brandName = configSourceString(['brand', 'name']);
+    }
 
     if (
-        $configEmail !== '' &&
-        !preg_match('/^\[[A-Z0-9_]+\]$/', $configEmail)
+        $companyName !== '' &&
+        $companyName !== 'Echoform' &&
+        !preg_match('/^\[[A-Z0-9_]+\]$/', $companyName)
     ) {
-        return $configEmail;
+        return $companyName;
+    }
+
+    if ($brandName !== '' && !preg_match('/^\[[A-Z0-9_]+\]$/', $brandName)) {
+        return $brandName;
+    }
+
+    return $companyName !== '' && !preg_match('/^\[[A-Z0-9_]+\]$/', $companyName)
+        ? $companyName
+        : 'Echoform';
+}
+
+function configuredRecipientEmail(): string
+{
+    $config = loadSiteConfig();
+
+    $email = configString(
+        $config,
+        ['site', 'email']
+    );
+
+    if ($email === '') {
+        $email = configString(
+            $config,
+            ['company', 'email']
+        );
+    }
+
+    if (
+        $email !== '' &&
+        !preg_match('/^\[[A-Z0-9_]+\]$/', $email) &&
+        filter_var($email, FILTER_VALIDATE_EMAIL)
+    ) {
+        return $email;
     }
 
     return trim(
-        getenv('ECHOFORM_CONTACT_EMAIL') ?: 'hello@echoform.studio'
+        getenv('ECHOFORM_CONTACT_EMAIL') ?: ''
     );
 }
 
+function configuredSiteName(): string
+{
+    $config = loadSiteConfig();
+
+    $name = configString(
+        $config,
+        ['site', 'name']
+    );
+
+    if ($name === '') {
+        $name = configString(
+            $config,
+            ['brand', 'name']
+        );
+    }
+
+    $name = normalizeSingleLine($name);
+
+    return $name !== ''
+        ? $name
+        : 'Website';
+}
 function parseRequestData(): array
 {
     $contentType = strtolower(
@@ -288,7 +386,7 @@ function validateOrigin(): void
     $originHost = strtolower($originHost);
 
     if ($requestHost === '' || !hash_equals($requestHost, $originHost)) {
-        respond(403, false, 'This form can only be submitted from the Echoform website.');
+        respond(403, false, 'This form can only be submitted from the ' . configuredCompanyName() . ' website.');
     }
 }
 
@@ -505,7 +603,7 @@ function subjectForForm(string $formType, string $inquiryType): string
         str_contains($normalized, 'plan') ||
         str_contains($normalized, 'room')
     ) {
-        return 'New Echoform acoustic plan request';
+        return 'New ' . configuredCompanyName() . ' acoustic plan request';
     }
 
     if (
@@ -514,16 +612,16 @@ function subjectForForm(string $formType, string $inquiryType): string
         str_contains($normalized, 'partner') ||
         str_contains($normalized, 'campaign')
     ) {
-        return 'New Echoform advertising or collaboration inquiry';
+        return 'New ' . configuredCompanyName() . ' advertising or collaboration inquiry';
     }
 
-    return 'New Echoform website inquiry';
+    return 'New ' . configuredCompanyName() . ' website inquiry';
 }
 
 function formatMessageBody(array $fields, string $clientAddress): string
 {
     $lines = [
-        'A new inquiry was submitted through the Echoform website.',
+        'A new inquiry was submitted through the ' . configuredCompanyName() . ' website.',
         '',
         'Submission details',
         '------------------',
@@ -747,7 +845,7 @@ $fromAddress = trim(
 );
 
 if (!filter_var($fromAddress, FILTER_VALIDATE_EMAIL)) {
-    $fromAddress = 'noreply@echoform.studio';
+    $fromAddress = 'noreply@' . strtolower(preg_replace('/[^a-z0-9.-]+/i', '', configuredCompanyName())) . '.site';
 }
 
 $safeName = sanitizeHeaderValue($fullName);
@@ -772,13 +870,19 @@ $encodedName = function_exists('mb_encode_mimeheader')
     )
     : $safeName;
 
+$siteName = configuredSiteName();
+$safeSiteName = sanitizeHeaderValue($siteName);
+
 $headers = [
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
     'Content-Transfer-Encoding: 8bit',
-    'From: Echoform Website <' . $fromAddress . '>',
-    'Reply-To: ' . $encodedName . ' <' . $safeEmail . '>',
-    'X-Mailer: Echoform Contact Form',
+    'From: ' . $safeSiteName .
+        ' Website <' . $fromAddress . '>',
+    'Reply-To: ' . $encodedName .
+        ' <' . $safeEmail . '>',
+    'X-Mailer: ' . $safeSiteName .
+        ' Contact Form',
 ];
 
 $body = formatMessageBody(
@@ -797,7 +901,7 @@ if (!$sent) {
     respond(
         500,
         false,
-        'Your inquiry could not be sent right now. Please try again later or contact Echoform by email.'
+        'Your inquiry could not be sent right now. Please try again later or use the configured company email.'
     );
 }
 

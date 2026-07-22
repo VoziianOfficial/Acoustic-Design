@@ -250,9 +250,13 @@
         let dragging = false;
 
         function render() {
-            wrapper.style.transform = `translate3d(-${activeIndex * 100}%, 0, 0)`;
+            wrapper.style.transform = "";
 
             slides.forEach(function (slide, index) {
+                slide.classList.toggle(
+                    "is-active",
+                    index === activeIndex
+                );
                 slide.setAttribute(
                     "aria-hidden",
                     index === activeIndex ? "false" : "true"
@@ -324,10 +328,6 @@
             }
 
             dragX = event.clientX;
-            const offset =
-                ((dragX - startX) / slider.clientWidth) * 100;
-
-            wrapper.style.transform = `translate3d(calc(-${activeIndex * 100}% + ${offset}%), 0, 0)`;
         });
 
         slider.addEventListener("pointerup", finishDrag);

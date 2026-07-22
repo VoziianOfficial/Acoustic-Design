@@ -1521,13 +1521,22 @@
 
     .services-layers__layout {
         grid-template-columns: minmax(0, 1fr);
+        max-width: 100%;
+        overflow-x: clip;
     }
 
     .services-layers__copy {
         max-width: 780px;
     }
 
+    .services-layers__diagram {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
     .services-layers__scene {
+        width: 100%;
         max-width: 840px;
         min-height: 680px;
     }
@@ -1568,10 +1577,19 @@
 
     .services-faq__layout {
         grid-template-columns: minmax(0, 1fr);
+        max-width: 100%;
+        overflow-x: clip;
     }
 
     .services-faq__media {
         max-width: 660px;
+    }
+
+    .services-faq__content,
+    .services-faq__accordion {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
     }
 
     .services-faq__image {

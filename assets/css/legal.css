@@ -850,33 +850,52 @@ body[data-page="cookie-policy"] {
 }
 
 .legal-contact-card__details {
-    display: grid;
-    gap: 12px;
-    padding-top: 20px;
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+    padding-top: 16px;
     border-top: 1px solid rgba(11, 13, 16, 0.08);
 }
 
 .legal-contact-card__details a,
 .legal-contact-card__details p {
-    display: grid;
-    grid-template-columns: 22px minmax(0, 1fr);
-    align-items: start;
-    gap: 12px;
+    display: inline-flex;
+    min-width: 0;
+    min-height: 42px;
+    align-items: center;
+    gap: 8px;
     margin: 0;
+    padding: 10px 12px;
+    border: 1px solid rgba(11, 13, 16, 0.08);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.62);
     color: var(--color-ink-soft, #5B616A);
-    font-size: 0.78rem;
-    line-height: 1.55;
-    overflow-wrap: anywhere;
+    font-size: 0.74rem;
+    font-weight: 750;
+    line-height: 1.25;
 }
 
 .legal-contact-card__details a {
-    width: fit-content;
+    flex: 0 0 auto;
     text-decoration: none;
 }
 
+.legal-contact-card__details p {
+    flex: 1 1 auto;
+}
+
+.legal-contact-card__details span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .legal-contact-card__details svg {
-    width: 20px;
-    height: 20px;
+    flex: 0 0 auto;
+    width: 17px;
+    height: 17px;
     color: var(--color-blue, #526DFF);
     stroke-width: 1.45;
 }
@@ -1230,9 +1249,13 @@ body[data-page="cookie-policy"] {
         grid-template-columns: minmax(0, 1fr);
     }
 
+    .legal-contact-card__details {
+        flex-wrap: wrap;
+    }
+
     .legal-contact-card__details a,
     .legal-contact-card__details p {
-        grid-template-columns: 20px minmax(0, 1fr);
+        flex: 1 1 100%;
     }
 
     .legal-document__footer nav {
