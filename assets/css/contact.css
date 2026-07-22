@@ -19,9 +19,7 @@
     gap: 22px;
 }
 
-.contact-main__intro h2 {
-    max-width: 10ch;
-}
+
 
 .contact-main__intro>p:not(.site-lead):not(.contact-main__platform-note) {
     color: var(--color-ink-soft);
@@ -834,9 +832,7 @@
     gap: 22px;
 }
 
-.contact-faq__intro h2 {
-    max-width: 10ch;
-}
+
 
 .contact-faq__intro>p {
     color: var(--color-ink-soft);

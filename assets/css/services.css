@@ -2362,3 +2362,188 @@
         transform: none;
     }
 }
+
+/* =========================================
+   SERVICES FAQ — WIDER CONTENT FIX
+   ========================================= */
+
+.services-faq__layout {
+    grid-template-columns:
+        minmax(270px, 0.6fr) minmax(0, 1.4fr);
+    gap: clamp(42px, 5vw, 78px);
+}
+
+.services-faq__content {
+    width: 100%;
+    min-width: 0;
+}
+
+.services-faq__accordion {
+    display: grid;
+    width: 100%;
+    max-width: none;
+    margin-top: 28px;
+    gap: 12px;
+    border-top: 0;
+}
+
+/* Карточка занимает всю ширину правой колонки */
+
+.services-faq__accordion .site-accordion__item {
+    width: 100%;
+    max-width: none;
+    overflow: clip;
+    border: 1px solid rgba(11, 13, 16, 0.1);
+    border-radius: 18px;
+    background: var(--color-white);
+    box-shadow: 0 10px 30px rgba(11, 13, 16, 0.05);
+}
+
+.services-faq__accordion .site-accordion__item h3 {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+/* Вопрос занимает всю доступную ширину,
+   кнопка всегда находится справа */
+
+.services-faq__accordion .site-accordion__trigger {
+    display: grid;
+    width: 100%;
+    max-width: none;
+    min-height: 78px;
+    grid-template-columns: minmax(0, 1fr) 46px;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 18px 16px 24px;
+    border: 0;
+    background: transparent;
+    text-align: left;
+}
+
+.services-faq__accordion .site-accordion__trigger>span:first-child {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    overflow: hidden;
+    color: inherit;
+    font-size: clamp(0.96rem, 1.12vw, 1.12rem);
+    font-weight: 750;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Кнопка не участвует в ширине текста */
+
+.services-faq__accordion .site-accordion__icon {
+    position: relative;
+    right: auto;
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    justify-self: end;
+    flex: 0 0 auto;
+    border: 1px solid rgba(11, 13, 16, 0.14);
+    border-radius: 50%;
+    background: var(--color-warm-white);
+}
+
+/* Ответ теперь использует почти всю ширину карточки */
+
+.services-faq__accordion .site-accordion__panel-inner {
+    width: 100%;
+    min-width: 0;
+}
+
+.services-faq__accordion .site-accordion__content {
+    width: 100%;
+    max-width: none;
+    padding: 0 76px 26px 24px;
+}
+
+.services-faq__accordion .site-accordion__content p {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-line-light);
+    color: var(--color-ink-soft);
+    font-size: 0.88rem;
+    line-height: 1.72;
+}
+
+/* Открытый пункт */
+
+.services-faq__accordion .site-accordion__item[data-open="true"],
+.services-faq__accordion .site-accordion__item.is-open {
+    border-color: rgba(82, 109, 255, 0.42);
+    box-shadow: 0 18px 44px rgba(82, 109, 255, 0.1);
+}
+
+.services-faq__accordion .site-accordion__trigger[aria-expanded="true"] {
+    color: var(--color-blue);
+}
+
+.services-faq__accordion .site-accordion__trigger[aria-expanded="true"] .site-accordion__icon {
+    border-color: var(--color-blue);
+    background: var(--color-blue);
+    color: var(--color-white);
+}
+
+/* На средних экранах разрешаем перенос */
+
+@media (max-width: 1199px) {
+    .services-faq__layout {
+        grid-template-columns:
+            minmax(250px, 0.52fr) minmax(0, 1.48fr);
+        gap: 42px;
+    }
+
+    .services-faq__accordion .site-accordion__trigger>span:first-child {
+        white-space: normal;
+        text-overflow: clip;
+    }
+}
+
+/* После перехода секции в одну колонку */
+
+@media (max-width: 1099px) {
+    .services-faq__layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 50px;
+    }
+
+    .services-faq__content {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .services-faq__accordion .site-accordion__trigger {
+        min-height: 72px;
+        grid-template-columns: minmax(0, 1fr) 42px;
+        gap: 14px;
+        padding: 14px 14px 14px 18px;
+    }
+
+    .services-faq__accordion .site-accordion__trigger>span:first-child {
+        overflow: visible;
+        font-size: 0.94rem;
+        white-space: normal;
+    }
+
+    .services-faq__accordion .site-accordion__icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .services-faq__accordion .site-accordion__content {
+        padding: 0 18px 22px;
+    }
+}
