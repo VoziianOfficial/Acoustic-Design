@@ -2798,3 +2798,197 @@
         animation: none;
     }
 }
+
+.home-acoustic-features {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(82px, 10vw, 148px);
+    background: var(--color-white);
+}
+
+.home-acoustic-features__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(60px, 9vw, 150px);
+    row-gap: clamp(54px, 7vw, 96px);
+}
+
+.home-acoustic-feature {
+    position: relative;
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(22px, 3vw, 34px);
+    min-width: 0;
+    padding-block: 12px 30px;
+    border-bottom: 1px solid rgba(11, 13, 16, 0.11);
+}
+
+.home-acoustic-feature::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-blue);
+    content: "";
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-acoustic-feature:nth-child(2)::after {
+    background: var(--color-cyan);
+}
+
+.home-acoustic-feature:nth-child(3)::after {
+    background: var(--color-yellow);
+}
+
+.home-acoustic-feature:nth-child(4)::after {
+    background: var(--color-blue);
+}
+
+.home-acoustic-feature:hover::after {
+    transform: scaleX(1);
+}
+
+.home-acoustic-feature__icon {
+    display: grid;
+    width: 72px;
+    height: 72px;
+    place-items: center;
+    color: var(--color-blue);
+    transition:
+        color 250ms ease,
+        transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home-acoustic-feature:nth-child(2) .home-acoustic-feature__icon {
+    color: #168899;
+}
+
+.home-acoustic-feature:nth-child(3) .home-acoustic-feature__icon {
+    color: #8a7100;
+}
+
+.home-acoustic-feature:nth-child(4) .home-acoustic-feature__icon {
+    color: var(--color-blue);
+}
+
+.home-acoustic-feature__icon svg {
+    width: 54px;
+    height: 54px;
+    stroke-width: 1.25;
+}
+
+.home-acoustic-feature:hover .home-acoustic-feature__icon {
+    transform: translateY(-5px) rotate(-3deg);
+}
+
+.home-acoustic-feature__content {
+    display: grid;
+    gap: 12px;
+    padding-top: 7px;
+}
+
+.home-acoustic-feature__content h3 {
+    max-width: 18ch;
+    color: var(--color-black);
+    font-size: clamp(1.55rem, 2.4vw, 2.45rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+}
+
+.home-acoustic-feature__content p {
+    max-width: 54ch;
+    color: var(--color-ink-soft);
+    font-size: clamp(0.88rem, 1vw, 1rem);
+    line-height: 1.7;
+}
+
+@media (max-width: 899px) {
+    .home-acoustic-features__grid {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 38px;
+    }
+
+    .home-acoustic-feature {
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 22px;
+    }
+
+    .home-acoustic-feature__icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .home-acoustic-feature__icon svg {
+        width: 46px;
+        height: 46px;
+    }
+}
+
+@media (max-width: 519px) {
+    .home-acoustic-features {
+        padding-block: 70px;
+    }
+
+    .home-acoustic-feature {
+        grid-template-columns: 50px minmax(0, 1fr);
+        gap: 17px;
+        padding-bottom: 26px;
+    }
+
+    .home-acoustic-feature__icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .home-acoustic-feature__icon svg {
+        width: 38px;
+        height: 38px;
+    }
+
+    .home-acoustic-feature__content {
+        padding-top: 3px;
+    }
+
+    .home-acoustic-feature__content h3 {
+        font-size: 1.65rem;
+    }
+
+    .home-acoustic-feature__content p {
+        font-size: 0.84rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .home-acoustic-feature::after,
+    .home-acoustic-feature__icon {
+        transition: none;
+    }
+
+    .home-acoustic-feature:hover .home-acoustic-feature__icon {
+        transform: none;
+    }
+}
+
+.home-goals__header {
+    width: 100%;
+}
+
+.home-goals__header #home-goals-title {
+    width: 100%;
+    max-width: none;
+    white-space: nowrap;
+    text-align: center;
+}
+
+@media (max-width: 520px) {
+    .home-goals__header #home-goals-title {
+        font-size: clamp(2rem, 10vw, 3rem);
+    }
+}
