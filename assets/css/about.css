@@ -1026,7 +1026,7 @@
 
 .about-independent {
     position: relative;
-    overflow: hidden;
+    overflow: clip;
 }
 
 .about-independent::before {
