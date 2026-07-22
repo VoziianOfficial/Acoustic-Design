@@ -363,23 +363,6 @@ body[data-page="cookie-policy"] {
     pointer-events: none;
 }
 
-.legal-document__number {
-    display: inline-flex;
-    min-width: 42px;
-    min-height: 28px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 22px;
-    padding: 6px 10px;
-    border: 1px solid rgba(82, 109, 255, 0.14);
-    border-radius: 999px;
-    background: rgba(82, 109, 255, 0.07);
-    color: var(--color-blue, #526DFF);
-    font-size: 0.63rem;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-}
-
 .legal-document__section h2 {
     max-width: 18ch;
     margin-bottom: 24px;
@@ -434,22 +417,15 @@ body[data-page="cookie-policy"] {
     content: "";
 }
 
-.legal-document__section ol {
-    counter-reset: legal-list;
-}
-
-.legal-document__section ol li {
-    counter-increment: legal-list;
-}
-
 .legal-document__section ol li::before {
     position: absolute;
-    top: 0;
+    top: 0.72em;
     left: 0;
-    color: var(--color-blue, #526DFF);
-    content: counter(legal-list, decimal-leading-zero);
-    font-size: 0.65rem;
-    font-weight: 900;
+    width: 9px;
+    height: 9px;
+    border: 2px solid var(--color-blue, #526DFF);
+    border-radius: 50%;
+    content: "";
 }
 
 .legal-document__section a:not(.site-button):not(.legal-inline-link):not(.legal-cookie-control) {

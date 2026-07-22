@@ -123,9 +123,6 @@
 
                 return `
           <article class="swiper-slide plan-note">
-            <span class="plan-note__number">${helpers.escapeHtml(
-                    item.number
-                )}</span>
             <i
               data-lucide="${helpers.escapeAttribute(
                     toLucideName(item.icon)

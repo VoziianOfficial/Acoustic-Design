@@ -583,14 +583,6 @@
     background: var(--color-yellow);
 }
 
-.plan-note__number {
-    color: rgba(11, 13, 16, 0.24);
-    font-family: var(--font-display);
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-}
-
 .plan-note>svg {
     width: 46px;
     height: 46px;

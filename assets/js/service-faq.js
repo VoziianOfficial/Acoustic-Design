@@ -11,7 +11,6 @@
     }
 
     function createFaqItem(item, index, sectionId) {
-        const number = String(index + 1).padStart(2, "0");
         const triggerId = `${sectionId}-trigger-${index + 1}`;
         const panelId = `${sectionId}-panel-${index + 1}`;
         const isOpen = index === 0;
@@ -29,10 +28,6 @@
                         aria-controls="${panelId}"
                         id="${triggerId}"
                     >
-                        <span class="service-faq-showcase__number">
-                            ${number}.
-                        </span>
-
                         <span class="service-faq-showcase__question">
                             ${escapeHtml(item.question)}
                         </span>
