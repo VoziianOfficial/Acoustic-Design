@@ -855,9 +855,9 @@ html:not(.aos-ready) [data-aos] {
 }
 
 .site-header {
-    position: sticky;
-    z-index: 1000;
-    top: 0;
+    position: relative;
+        z-index: 1;
+        top: auto;
     width: 100%;
     height: var(--header-height);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -2655,5 +2655,79 @@ html:not(.aos-ready) [data-aos] {
     .site-cta:hover .site-cta__media img,
     .site-tilt:hover {
         transform: none;
+    }
+}
+
+
+[data-site-header] {
+    position: sticky;
+    z-index: 1100;
+    top: 0;
+    width: 100%;
+    height: var(--header-height);
+    overflow: visible;
+    background: var(--color-black);
+    transform: none;
+    isolation: isolate;
+}
+
+[data-site-header]>.site-header {
+    position: relative;
+    z-index: 1;
+    top: auto;
+    width: 100%;
+    height: 100%;
+    transform: none;
+}
+
+.site-header {
+    position: relative;
+    top: auto;
+    z-index: 1;
+    width: 100%;
+    height: var(--header-height);
+}
+
+.site-shell {
+    position: relative;
+    min-height: 100vh;
+    overflow: visible;
+}
+
+.site-main {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+.site-sticky {
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
+    align-self: start;
+    height: max-content;
+    max-height: calc(100vh - var(--header-height) - 48px);
+    overflow: visible;
+    transform: none;
+    will-change: auto;
+}
+
+.site-sticky[data-aos],
+.site-sticky[data-aos].aos-animate {
+    transform: none !important;
+}
+
+.site-grid--aside,
+.service-plan__layout,
+.legal-layout {
+    align-items: start;
+    overflow: visible;
+}
+
+@media (max-width: 991px) {
+    .site-sticky {
+        position: static;
+        top: auto;
+        height: auto;
+        max-height: none;
     }
 }
