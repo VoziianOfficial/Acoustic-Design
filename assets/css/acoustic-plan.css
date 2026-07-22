@@ -1287,3 +1287,300 @@
         animation: none;
     }
 }
+
+.plan-directions {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(58px, 7vw, 100px);
+    background: var(--color-white);
+}
+
+.plan-directions__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(18px, 2vw, 28px);
+}
+
+.plan-direction-card {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-width: 0;
+    min-height: 340px;
+    flex-direction: column;
+    overflow: hidden;
+    padding: clamp(28px, 3vw, 42px);
+    border: 1px solid rgba(11, 13, 16, 0.1);
+    border-radius: 30px;
+    color: var(--color-black);
+    box-shadow: 0 20px 52px rgba(11, 13, 16, 0.07);
+    transition:
+        border-color 350ms ease,
+        box-shadow 350ms ease,
+        transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.plan-direction-card:hover {
+    border-color: rgba(82, 109, 255, 0.32);
+    box-shadow: 0 32px 76px rgba(11, 13, 16, 0.14);
+    transform: translateY(-8px);
+}
+
+.plan-direction-card__copy {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    gap: 22px;
+    max-width: 94%;
+}
+
+.plan-direction-card__copy h2 {
+    max-width: none;
+    margin: 0;
+    color: inherit;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.7vw, 1.72rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    white-space: nowrap;
+}
+
+.plan-direction-card__copy p {
+    max-width: 31ch;
+    margin: 0;
+    color: inherit;
+    font-size: clamp(0.88rem, 1vw, 1rem);
+    line-height: 1.72;
+    opacity: 0.76;
+}
+
+/* Arrow */
+
+.plan-direction-card__arrow {
+    position: absolute;
+    z-index: 4;
+    bottom: clamp(28px, 3vw, 40px);
+    left: clamp(28px, 3vw, 42px);
+    display: grid;
+    width: 60px;
+    height: 60px;
+    place-items: center;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    transition:
+        border-color 300ms ease,
+        background-color 300ms ease,
+        color 300ms ease,
+        transform 300ms ease;
+}
+
+.plan-direction-card__arrow svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.8;
+    transition: transform 300ms ease;
+}
+
+.plan-direction-card:hover .plan-direction-card__arrow {
+    border-color: var(--color-yellow);
+    background: var(--color-yellow);
+    color: var(--color-black);
+    transform: scale(1.07);
+}
+
+.plan-direction-card:hover .plan-direction-card__arrow svg {
+    transform: translate(3px, -3px);
+}
+
+/* Large icon */
+
+.plan-direction-card__icon {
+    position: absolute;
+    z-index: 2;
+    right: clamp(28px, 3vw, 44px);
+    bottom: clamp(30px, 3vw, 44px);
+    width: clamp(78px, 7vw, 110px);
+    height: clamp(78px, 7vw, 110px);
+    color: currentColor;
+    opacity: 0.3;
+    stroke-width: 1.1;
+    transition:
+        opacity 350ms ease,
+        transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.plan-direction-card:hover .plan-direction-card__icon {
+    opacity: 0.52;
+    transform: translate(-5px, -7px) rotate(-4deg);
+}
+
+/* Yellow */
+
+.plan-direction-card--yellow {
+    border-color: transparent;
+    background: var(--color-yellow);
+    color: var(--color-black);
+}
+
+.plan-direction-card--yellow .plan-direction-card__arrow {
+    border-color: var(--color-charcoal);
+    background: var(--color-charcoal);
+    color: var(--color-white);
+}
+
+.plan-direction-card--yellow:hover .plan-direction-card__arrow {
+    border-color: var(--color-blue);
+    background: var(--color-blue);
+    color: var(--color-white);
+}
+
+/* Charcoal */
+
+.plan-direction-card--charcoal {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--color-charcoal);
+    color: var(--color-white);
+}
+
+.plan-direction-card--charcoal .plan-direction-card__copy p {
+    color: rgba(248, 248, 245, 0.76);
+}
+
+/* Blue */
+
+.plan-direction-card--blue {
+    border-color: transparent;
+    background: var(--color-blue);
+    color: var(--color-white);
+}
+
+.plan-direction-card--blue .plan-direction-card__copy p {
+    color: rgba(248, 248, 245, 0.8);
+}
+
+/* Black */
+
+.plan-direction-card--black {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.plan-direction-card--black .plan-direction-card__copy p {
+    color: rgba(248, 248, 245, 0.72);
+}
+
+/* Light */
+
+.plan-direction-card--light {
+    background: var(--color-warm-white);
+    color: var(--color-black);
+}
+
+.plan-direction-card--light .plan-direction-card__arrow {
+    border-color: var(--color-charcoal);
+    background: var(--color-charcoal);
+    color: var(--color-white);
+}
+
+.plan-direction-card--light .plan-direction-card__icon {
+    color: var(--color-text-muted);
+}
+
+/* Cyan */
+
+.plan-direction-card--cyan {
+    border-color: transparent;
+    background: var(--color-cyan);
+    color: var(--color-black);
+}
+
+.plan-direction-card--cyan .plan-direction-card__arrow {
+    border-color: var(--color-black);
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.plan-direction-card--cyan:hover .plan-direction-card__arrow {
+    border-color: var(--color-blue);
+    background: var(--color-blue);
+}
+
+/* Tablet */
+
+@media (max-width: 1050px) {
+    .plan-directions__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .plan-direction-card {
+        min-height: 325px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+    .plan-directions {
+        padding-block: 48px;
+    }
+
+    .plan-directions__grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .plan-direction-card {
+        min-height: 290px;
+        padding: 28px 24px;
+        border-radius: 24px;
+    }
+
+    .plan-direction-card__copy {
+        max-width: 100%;
+    }
+
+    .plan-direction-card__copy h2 {
+        font-size: 1.35rem;
+        white-space: normal;
+    }
+
+    .plan-direction-card__copy p {
+        max-width: 30ch;
+        font-size: 0.9rem;
+    }
+
+    .plan-direction-card__arrow {
+        bottom: 24px;
+        left: 24px;
+        width: 52px;
+        height: 52px;
+    }
+
+    .plan-direction-card__icon {
+        right: 24px;
+        bottom: 24px;
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .plan-direction-card,
+    .plan-direction-card__arrow,
+    .plan-direction-card__arrow svg,
+    .plan-direction-card__icon {
+        transition: none;
+    }
+
+    .plan-direction-card:hover,
+    .plan-direction-card:hover .plan-direction-card__arrow,
+    .plan-direction-card:hover .plan-direction-card__arrow svg,
+    .plan-direction-card:hover .plan-direction-card__icon {
+        transform: none;
+    }
+}
