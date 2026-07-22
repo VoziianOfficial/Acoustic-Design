@@ -223,7 +223,7 @@ window.ECHOFORM_CONFIG = {
             "icon": "Radio",
             "description": "Plan a clearer microphone environment with discreet acoustic treatment, considered desk placement, and visual integration for shared rooms.",
             "image": "assets/images/material-fabric-panel.webp",
-            "heroImage": "assets/images/material-mineral-fibre.webp",
+            "heroImage": "assets/images/home-problem-detail.webp",
             "overviewImage": "assets/images/material-slat-wood.webp",
             "approachesImage": "assets/images/services-hero.webp",
             "imageAlt": "Streaming room with microphone, desk, lighting, and integrated acoustic panels",
