@@ -552,7 +552,7 @@ window.ECHOFORM_CONFIG = {
         "loadingMessage": "Sending your request…",
         "successMessage": "Your request was sent successfully. Thank you for contacting Echoform.",
         "errorMessage": "Your request could not be sent. Please review the form and try again.",
-        "configurationErrorMessage": "The website email recipient has not been configured. Please update the corporate email in assets/js/config.js.",
+        "configurationErrorMessage": "The website email recipient has not been configured. Please update the corporate email in config/config.js.",
         "validation": {
             "requiredMessage": "Please complete this field.",
             "nameMessage": "Enter your full name using at least two characters.",
