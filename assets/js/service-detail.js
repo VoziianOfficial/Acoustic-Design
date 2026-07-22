@@ -7,8 +7,8 @@
             eyebrow: "Listening and Recording Rooms",
             heroText:
                 "Shape a clearer studio around speaker placement, listening position, reflections, desk interaction, rear-wall energy, and low-frequency behaviour.",
-            heroImage: "assets/images/studio-hero.webp",
-            overviewImage: "assets/images/studio-overview.webp",
+            heroImage: "assets/images/soundproofing-overview.webp",
+            overviewImage: "assets/images/material-fabric-panel.webp",
             overviewImageAlt:
                 "Home studio arranged around speakers, a centered desk, listening position, and acoustic treatment",
             icon: "audio-waveform",
@@ -21,9 +21,9 @@
             eyebrow: "Voice, Video and Live Content",
             heroText:
                 "Shape a clearer voice environment around microphone position, desk reflections, wall and ceiling surfaces, camera framing, equipment noise, and shared-room use.",
-            heroImage: "assets/images/streaming-hero.webp",
+            heroImage: "assets/images/about-hero.webp",
             overviewImage:
-                "assets/images/streaming-overview.webp",
+                "assets/images/acoustic-plan-hero.webp",
             overviewImageAlt:
                 "Streaming room arranged around a microphone, workstation, camera, lighting, and acoustic treatment",
             icon: "radio",
@@ -37,7 +37,7 @@
             heroText:
                 "Understand how airborne sound, impact noise, gaps, doors, windows, mass, decoupling, ventilation, and flanking paths influence realistic sound-isolation decisions.",
             heroImage:
-                "assets/images/soundproofing-hero.webp",
+                "assets/images/contact-hero.webp",
             overviewImage:
                 "assets/images/soundproofing-overview.webp",
             overviewImageAlt:
@@ -53,9 +53,9 @@
                 "Placement, Depth and Interior Integration",
             heroText:
                 "Plan panel purpose, thickness, air gaps, wall and ceiling zones, finishes, mounting, bass control, and visual integration around the actual room.",
-            heroImage: "assets/images/panels-hero.webp",
+            heroImage: "assets/images/home-hero-studio.webp",
             overviewImage:
-                "assets/images/panels-overview.webp",
+                "assets/images/home-problem-detail.webp",
             overviewImageAlt:
                 "Modern interior with fabric acoustic panels integrated across walls and ceiling zones",
             icon: "layout-panel-top",

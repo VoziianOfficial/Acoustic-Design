@@ -440,6 +440,52 @@
             });
     }
 
+    function initializeHomeAcousticSlider() {
+        const section = document.querySelector("[data-home-acoustic-slider]");
+
+        if (
+            !section ||
+            typeof window.Swiper !== "function" ||
+            section.dataset.swiperReady === "true"
+        ) {
+            return;
+        }
+
+        const slider = section.querySelector(".home-acoustic-slider__swiper");
+        const pagination = section.querySelector(".home-acoustic-slider__pagination");
+
+        if (!slider || !pagination) {
+            return;
+        }
+
+        section.dataset.swiperReady = "true";
+
+        new Swiper(slider, {
+            slidesPerView: 1,
+            speed: 750,
+            loop: true,
+            grabCursor: true,
+            watchOverflow: true,
+            effect: "fade",
+            fadeEffect: {
+                crossFade: true
+            },
+            autoplay: {
+                delay: 6000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+            },
+            pagination: {
+                el: pagination,
+                clickable: true
+            },
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true
+            }
+        });
+    }
+
     async function initializeIndexPage(config, helpers) {
         initializeHeroContent(config);
         initializeRoomRail(config);
@@ -450,6 +496,7 @@
         initializeImageLoadStates();
         helpers.refreshIcons(document);
         helpers.safeRefreshAos();
+        initializeHomeAcousticSlider();
     }
 
     window.ECHOFORM_PAGE_MODULE = {

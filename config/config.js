@@ -13,7 +13,7 @@ window.ECHOFORM_CONFIG = {
         "logoDarkPath": "assets/images/echoform-logo-dark.svg",
         "logoLightPath": "assets/images/echoform-logo-light.svg",
         "faviconPath": "assets/images/echoform-favicon.svg",
-        "openGraphImage": "assets/images/echoform-og.webp"
+        "openGraphImage": "assets/images/home-problem-detail.webp"
     },
     "company": {
         "email": "[CORPORATE_EMAIL]",
@@ -179,8 +179,8 @@ window.ECHOFORM_CONFIG = {
         "homepageText": "Explore thoughtful advertising, creative collaborations, and tailored partnership opportunities shaped around your audience, goals, and acoustic-focused project.",
         "homepageLinkLabel": "Discuss a Partnership",
         "homepageLinkUrl": "contact.html#advertise-collaborate",
-        "image": "assets/images/home-collaboration.webp",
-        "contactImage": "assets/images/contact-collaboration.webp"
+        "image": "assets/images/home-problem-room.webp",
+        "contactImage": "assets/images/home-shape-corner.webp"
     },
     "services": [
         {
@@ -191,10 +191,10 @@ window.ECHOFORM_CONFIG = {
             "url": "home-studio-acoustics.html",
             "icon": "AudioWaveform",
             "description": "Explore speaker placement, reflection control, bass management, recording priorities, and practical treatment for compact studios and podcast spaces.",
-            "image": "assets/images/room-home-studio.webp",
-            "heroImage": "assets/images/studio-hero.webp",
-            "overviewImage": "assets/images/studio-overview.webp",
-            "approachesImage": "assets/images/studio-approaches.webp",
+            "image": "assets/images/home-shape-main.webp",
+            "heroImage": "assets/images/home-shape-panel.webp",
+            "overviewImage": "assets/images/material-acoustic-felt.webp",
+            "approachesImage": "assets/images/material-bass-trap.webp",
             "imageAlt": "Modern home recording studio with carefully placed acoustic treatment",
             "planningFocus": [
                 "Listening position and speaker alignment",
@@ -211,7 +211,7 @@ window.ECHOFORM_CONFIG = {
                 "text": "Share your room, equipment position, and listening goals to explore a clearer treatment direction.",
                 "buttonLabel": "Request a Studio Plan",
                 "buttonUrl": "acoustic-plan.html#request-plan",
-                "image": "assets/images/studio-overview.webp"
+                "image": "assets/images/material-door-seal.webp"
             }
         },
         {
@@ -222,10 +222,10 @@ window.ECHOFORM_CONFIG = {
             "url": "streaming-room-setup.html",
             "icon": "Radio",
             "description": "Plan a clearer microphone environment with discreet acoustic treatment, considered desk placement, and visual integration for shared rooms.",
-            "image": "assets/images/room-streaming.webp",
-            "heroImage": "assets/images/streaming-hero.webp",
-            "overviewImage": "assets/images/streaming-overview.webp",
-            "approachesImage": "assets/images/streaming-approaches.webp",
+            "image": "assets/images/material-fabric-panel.webp",
+            "heroImage": "assets/images/material-mineral-fibre.webp",
+            "overviewImage": "assets/images/material-slat-wood.webp",
+            "approachesImage": "assets/images/services-hero.webp",
             "imageAlt": "Streaming room with microphone, desk, lighting, and integrated acoustic panels",
             "planningFocus": [
                 "Speech clarity around the microphone",
@@ -242,7 +242,7 @@ window.ECHOFORM_CONFIG = {
                 "text": "Describe your streaming space, microphone position, and visual priorities to explore a balanced room direction.",
                 "buttonLabel": "Request a Streaming Plan",
                 "buttonUrl": "acoustic-plan.html#request-plan",
-                "image": "assets/images/streaming-overview.webp"
+                "image": "assets/images/services-problems.webp"
             }
         },
         {
@@ -254,9 +254,9 @@ window.ECHOFORM_CONFIG = {
             "icon": "Layers",
             "description": "Understand sound transmission, gaps, mass, decoupling, flanking paths, and when a qualified building specialist may be required.",
             "image": "assets/images/material-door-seal.webp",
-            "heroImage": "assets/images/soundproofing-hero.webp",
+            "heroImage": "assets/images/soundproofing-overview.webp",
             "overviewImage": "assets/images/soundproofing-overview.webp",
-            "approachesImage": "assets/images/soundproofing-approaches.webp",
+            "approachesImage": "assets/images/material-fabric-panel.webp",
             "imageAlt": "Architectural room detail showing layered wall construction and sealed openings",
             "planningFocus": [
                 "Airborne and impact sound paths",
@@ -285,9 +285,9 @@ window.ECHOFORM_CONFIG = {
             "icon": "LayoutPanelTop",
             "description": "Compare panel purpose, thickness, placement, air gaps, finishes, ceiling treatment, and low-frequency considerations.",
             "image": "assets/images/material-fabric-panel.webp",
-            "heroImage": "assets/images/panels-hero.webp",
-            "overviewImage": "assets/images/panels-overview.webp",
-            "approachesImage": "assets/images/panels-approaches.webp",
+            "heroImage": "assets/images/about-hero.webp",
+            "overviewImage": "assets/images/acoustic-plan-hero.webp",
+            "approachesImage": "assets/images/contact-hero.webp",
             "imageAlt": "Fabric acoustic panels arranged as part of a modern interior",
             "planningFocus": [
                 "Panel thickness and intended frequency range",
@@ -304,7 +304,7 @@ window.ECHOFORM_CONFIG = {
                 "text": "Share your room layout and visual direction to explore suitable panel zones, forms, and finishes.",
                 "buttonLabel": "Plan Panel Placement",
                 "buttonUrl": "acoustic-plan.html#request-plan",
-                "image": "assets/images/panels-overview.webp"
+                "image": "assets/images/home-hero-studio.webp"
             }
         }
     ],
@@ -331,7 +331,7 @@ window.ECHOFORM_CONFIG = {
                 "primaryUrl": "acoustic-plan.html",
                 "secondaryLabel": "Streaming Solutions",
                 "secondaryUrl": "streaming-room-setup.html",
-                "image": "assets/images/home-hero-streaming.webp",
+                "image": "assets/images/home-problem-detail.webp",
                 "imageAlt": "Modern streaming and podcast room with integrated acoustic treatment"
             },
             {
@@ -343,7 +343,7 @@ window.ECHOFORM_CONFIG = {
                 "primaryUrl": "acoustic-panels.html",
                 "secondaryLabel": "Soundproofing Basics",
                 "secondaryUrl": "soundproofing-guidance.html",
-                "image": "assets/images/home-hero-panels.webp",
+                "image": "assets/images/home-problem-room.webp",
                 "imageAlt": "Architectural room featuring modern acoustic wall panels"
             }
         ],
@@ -372,7 +372,7 @@ window.ECHOFORM_CONFIG = {
                 "First-reflection treatment",
                 "Bass and rear-wall control"
             ],
-            "image": "assets/images/room-home-studio.webp",
+            "image": "assets/images/home-shape-corner.webp",
             "imageAlt": "Home studio with speakers and broadband acoustic panels"
         },
         {
@@ -384,7 +384,7 @@ window.ECHOFORM_CONFIG = {
                 "Speech clarity",
                 "Flexible treatment placement"
             ],
-            "image": "assets/images/room-podcast.webp",
+            "image": "assets/images/home-shape-main.webp",
             "imageAlt": "Podcast recording space with microphones and soft acoustic treatment"
         },
         {
@@ -396,7 +396,7 @@ window.ECHOFORM_CONFIG = {
                 "Microphone environment",
                 "Visual integration"
             ],
-            "image": "assets/images/room-streaming.webp",
+            "image": "assets/images/home-shape-panel.webp",
             "imageAlt": "Streaming room with microphone, desk, and acoustic wall treatment"
         },
         {
@@ -408,7 +408,7 @@ window.ECHOFORM_CONFIG = {
                 "Speaker and seating layout",
                 "Low-frequency balance"
             ],
-            "image": "assets/images/room-entertainment.webp",
+            "image": "assets/images/material-acoustic-felt.webp",
             "imageAlt": "Residential entertainment room with integrated acoustic treatment"
         }
     ],
@@ -494,42 +494,42 @@ window.ECHOFORM_CONFIG = {
             "text": "Turn broad acoustic ideas into practical priorities based on your room, use, and realistic limitations.",
             "buttonLabel": "Explore a Room Plan",
             "buttonUrl": "acoustic-plan.html",
-            "image": "assets/images/about-story-main.webp"
+            "image": "assets/images/material-bass-trap.webp"
         },
         "services": {
             "heading": "Explore Your Options",
             "text": "Compare treatment, placement, materials, and sound-isolation guidance before deciding what your room needs.",
             "buttonLabel": "Request a Plan",
             "buttonUrl": "acoustic-plan.html#request-plan",
-            "image": "assets/images/services-materials.webp"
+            "image": "assets/images/material-door-seal.webp"
         },
         "acoustic-plan": {
             "heading": "Shape Your Room",
             "text": "Prepare your room details and begin a practical acoustic plan focused on your space and goals.",
             "buttonLabel": "Go to the Form",
             "buttonUrl": "#request-plan",
-            "image": "assets/images/plan-receive.webp"
+            "image": "assets/images/material-fabric-panel.webp"
         },
         "contact": {
             "heading": "Build Something Better",
             "text": "Start a conversation about acoustic planning, information requests, advertising, or a tailored collaboration.",
             "buttonLabel": "Send Your Request",
             "buttonUrl": "#contact-form",
-            "image": "assets/images/contact-collaboration.webp"
+            "image": "assets/images/material-mineral-fibre.webp"
         },
         "home-studio-acoustics": {
             "heading": "Plan Your Studio",
             "text": "Share your room, equipment position, and listening priorities to explore a clearer studio layout.",
             "buttonLabel": "Request a Studio Plan",
             "buttonUrl": "acoustic-plan.html#request-plan",
-            "image": "assets/images/studio-overview.webp"
+            "image": "assets/images/material-slat-wood.webp"
         },
         "streaming-room-setup": {
             "heading": "Clarify Your Setup",
             "text": "Explore a room direction that supports speech clarity, microphone use, and a considered visual background.",
             "buttonLabel": "Request a Streaming Plan",
             "buttonUrl": "acoustic-plan.html#request-plan",
-            "image": "assets/images/streaming-overview.webp"
+            "image": "assets/images/services-hero.webp"
         },
         "soundproofing-guidance": {
             "heading": "Review Sound Paths",
@@ -543,7 +543,7 @@ window.ECHOFORM_CONFIG = {
             "text": "Explore suitable panel zones, thickness considerations, finishes, and practical room integration.",
             "buttonLabel": "Plan Panel Placement",
             "buttonUrl": "acoustic-plan.html#request-plan",
-            "image": "assets/images/panels-overview.webp"
+            "image": "assets/images/services-problems.webp"
         }
     },
     "forms": {
@@ -759,37 +759,37 @@ window.ECHOFORM_CONFIG = {
         },
         "about": {
             "hero": "assets/images/about-hero.webp",
-            "storyMain": "assets/images/about-story-main.webp",
-            "storyCircle": "assets/images/about-story-circle.webp",
-            "realRoom": "assets/images/about-real-room.webp",
-            "mosaicStudio": "assets/images/about-mosaic-studio.webp",
-            "mosaicStreaming": "assets/images/about-mosaic-streaming.webp",
-            "mosaicLiving": "assets/images/about-mosaic-living.webp",
-            "mosaicOffice": "assets/images/about-mosaic-office.webp",
-            "guide": "assets/images/about-guide.webp"
+            "storyMain": "assets/images/soundproofing-overview.webp",
+            "storyCircle": "assets/images/material-fabric-panel.webp",
+            "realRoom": "assets/images/about-hero.webp",
+            "mosaicStudio": "assets/images/acoustic-plan-hero.webp",
+            "mosaicStreaming": "assets/images/contact-hero.webp",
+            "mosaicLiving": "assets/images/home-hero-studio.webp",
+            "mosaicOffice": "assets/images/home-problem-detail.webp",
+            "guide": "assets/images/home-problem-room.webp"
         },
         "services": {
             "hero": "assets/images/services-hero.webp",
             "problems": "assets/images/services-problems.webp",
-            "materials": "assets/images/services-materials.webp",
-            "faq": "assets/images/services-faq.webp"
+            "materials": "assets/images/home-shape-corner.webp",
+            "faq": "assets/images/home-shape-main.webp"
         },
         "plan": {
-            "hero": "assets/images/plan-hero.webp",
-            "receive": "assets/images/plan-receive.webp",
-            "details": "assets/images/plan-details.webp",
-            "process": "assets/images/plan-process.webp",
-            "faq": "assets/images/plan-faq.webp"
+            "hero": "assets/images/home-shape-panel.webp",
+            "receive": "assets/images/material-acoustic-felt.webp",
+            "details": "assets/images/material-bass-trap.webp",
+            "process": "assets/images/material-door-seal.webp",
+            "faq": "assets/images/material-fabric-panel.webp"
         },
         "contact": {
             "hero": "assets/images/contact-hero.webp",
-            "collaboration": "assets/images/contact-collaboration.webp",
-            "faq": "assets/images/contact-faq.webp"
+            "collaboration": "assets/images/material-mineral-fibre.webp",
+            "faq": "assets/images/material-slat-wood.webp"
         },
         "legal": {
-            "hero": "assets/images/legal-hero.webp"
+            "hero": "assets/images/services-hero.webp"
         },
-        "notFound": "assets/images/room-not-found.svg"
+        "notFound": "assets/images/services-problems.webp"
     },
     "seo": {
         "index": {

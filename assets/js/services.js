@@ -12,7 +12,7 @@
                 "First-reflection and rear-wall control",
                 "Bass build-up and corner treatment"
             ],
-            image: "assets/images/studio-overview.webp",
+            image: "assets/images/home-problem-room.webp",
             imageAlt:
                 "Home studio arranged around speakers, a listening position, and acoustic treatment",
             icon: "audio-waveform",
@@ -28,7 +28,7 @@
                 "Desk, wall, and ceiling reflection control",
                 "Treatment integrated with the camera view"
             ],
-            image: "assets/images/streaming-overview.webp",
+            image: "assets/images/home-shape-corner.webp",
             imageAlt:
                 "Streaming room with a microphone, workstation, lighting, and acoustic wall treatment",
             icon: "radio",
@@ -60,7 +60,7 @@
                 "Compare depth, backing, and air gaps",
                 "Verify complete-product safety information"
             ],
-            image: "assets/images/panels-overview.webp",
+            image: "assets/images/home-shape-main.webp",
             imageAlt:
                 "Architectural room with fabric acoustic panels arranged across the wall",
             icon: "layout-panel-top",
