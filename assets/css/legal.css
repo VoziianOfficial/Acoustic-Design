@@ -194,35 +194,9 @@ body[data-page="cookie-policy"] {
     gap: clamp(50px, 7vw, 112px);
 }
 
-.legal-navigation {
-    min-width: 0;
-}
 
-.legal-navigation__inner {
-    position: sticky;
-    top: calc(var(--header-height, 88px) + 24px);
-    display: grid;
-    align-content: start;
-    gap: 18px;
-    max-height: calc(100vh - var(--header-height, 88px) - 44px);
-    overflow-y: auto;
-    padding: 0 0 18px;
-    border: 1px solid rgba(11, 13, 16, 0.12);
-    border-radius: 30px;
-    background:
-        linear-gradient(180deg,
-            #15181D 0,
-            #15181D 92px,
-            transparent 92px),
-        linear-gradient(145deg,
-            rgba(255, 255, 255, 0.96),
-            rgba(248, 248, 245, 0.9));
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        0 30px 84px rgba(11, 13, 16, 0.18);
-    scrollbar-color: rgba(82, 109, 255, 0.26) transparent;
-    scrollbar-width: thin;
-}
+
+
 
 .legal-navigation__inner::-webkit-scrollbar {
     width: 6px;
@@ -1450,5 +1424,73 @@ body[data-page="cookie-policy"] {
         font-size: 8pt;
         font-weight: 400;
         overflow-wrap: anywhere;
+    }
+}
+
+
+.legal-navigation {
+    position: sticky;
+    top: calc(var(--header-height, 88px) + 24px);
+    z-index: 3;
+    align-self: start;
+    width: 100%;
+    min-width: 0;
+    height: max-content;
+    max-height: calc(100vh - var(--header-height, 88px) - 48px);
+    overflow: visible;
+    transform: none !important;
+    will-change: auto;
+}
+
+.legal-navigation__inner {
+    position: relative;
+    top: auto;
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    width: 100%;
+    max-height: calc(100vh - var(--header-height, 88px) - 48px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 0 18px;
+    border: 1px solid rgba(11, 13, 16, 0.12);
+    border-radius: 30px;
+    background:
+        linear-gradient(180deg,
+            #15181D 0,
+            #15181D 92px,
+            transparent 92px),
+        linear-gradient(145deg,
+            rgba(255, 255, 255, 0.96),
+            rgba(248, 248, 245, 0.9));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 30px 84px rgba(11, 13, 16, 0.18);
+    scrollbar-color: rgba(82, 109, 255, 0.26) transparent;
+    scrollbar-width: thin;
+    transform: none !important;
+}
+
+@media (max-width: 1099px) {
+    .legal-navigation {
+        position: static;
+        top: auto;
+        z-index: auto;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .legal-navigation__inner {
+        position: relative;
+        top: auto;
+        display: block;
+        max-height: none;
+        overflow: hidden;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
     }
 }
