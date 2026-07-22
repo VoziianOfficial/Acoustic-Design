@@ -128,6 +128,11 @@
     function buildLogo(className) {
         const brand = config.brand;
         const logoText = String(brand.logoText || brand.name || "ECHOFORM");
+        const logoIconPath = String(
+            brand.logoIconPath ||
+            brand.faviconPath ||
+            ""
+        );
         const accentIndex = Number.isInteger(brand.accentLetterIndex)
             ? brand.accentLetterIndex
             : 3;
@@ -140,12 +145,18 @@
                 return `<span class="site-logo__letter${accentClass}">${escapeHtml(letter)}</span>`;
             })
             .join("");
+        const icon = logoIconPath
+            ? `<img class="site-logo__icon" src="${escapeAttribute(
+                logoIconPath
+            )}" alt="${escapeAttribute(brand.logoIconAlt || "")}" aria-hidden="true">`
+            : "";
 
         return `
       <a class="site-logo ${className || ""}" href="index.html" aria-label="${escapeAttribute(
             brand.logoAlt || brand.name
         )}">
-        ${letters}
+        ${icon}
+        <span class="site-logo__text">${letters}</span>
       </a>
     `;
     }
@@ -572,6 +583,20 @@
                 }
             }
         });
+    }
+
+    function applyBrandAssets() {
+        const faviconPath = config.brand?.faviconPath;
+
+        if (!faviconPath) {
+            return;
+        }
+
+        document
+            .querySelectorAll('link[rel~="icon"]')
+            .forEach(function (link) {
+                link.setAttribute("href", faviconPath);
+            });
     }
 
     function renderConfiguredSelectOptions(root) {
@@ -2001,6 +2026,7 @@
         renderHeader();
         renderFooter();
         renderSiteCtas();
+        applyBrandAssets();
         applyConfigBindings();
         renderConfiguredSelectOptions();
         applySeoFromConfig();

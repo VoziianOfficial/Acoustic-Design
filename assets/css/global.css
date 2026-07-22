@@ -895,12 +895,25 @@ html:not(.aos-ready) [data-aos] {
     display: inline-flex;
     min-height: 44px;
     align-items: center;
+    gap: 10px;
     color: var(--color-white);
     font-family: var(--font-display);
     font-size: clamp(1.45rem, 2vw, 2rem);
     font-weight: 800;
     letter-spacing: -0.065em;
     line-height: 1;
+}
+
+.site-logo__icon {
+    width: clamp(30px, 3vw, 38px);
+    height: clamp(30px, 3vw, 38px);
+    flex: 0 0 auto;
+    object-fit: contain;
+}
+
+.site-logo__text {
+    display: inline-flex;
+    align-items: baseline;
 }
 
 .site-logo__letter {

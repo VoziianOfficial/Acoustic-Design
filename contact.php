@@ -156,6 +156,70 @@ function consentAccepted(mixed $value): bool
     );
 }
 
+function loadSiteConfig(): array
+{
+    $configPath = __DIR__ . '/config/config.js';
+
+    if (!is_file($configPath) || !is_readable($configPath)) {
+        return [];
+    }
+
+    $source = file_get_contents($configPath);
+
+    if ($source === false) {
+        return [];
+    }
+
+    if (
+        !preg_match(
+            '/window\.ECHOFORM_CONFIG\s*=\s*(\{.*\})\s*;\s*$/s',
+            $source,
+            $matches
+        )
+    ) {
+        return [];
+    }
+
+    try {
+        $decoded = json_decode($matches[1], true, 64, JSON_THROW_ON_ERROR);
+    } catch (JsonException) {
+        return [];
+    }
+
+    return is_array($decoded) ? $decoded : [];
+}
+
+function configString(array $config, array $path): string
+{
+    $value = $config;
+
+    foreach ($path as $key) {
+        if (!is_array($value) || !array_key_exists($key, $value)) {
+            return '';
+        }
+
+        $value = $value[$key];
+    }
+
+    return is_scalar($value) ? trim((string) $value) : '';
+}
+
+function configuredRecipientEmail(): string
+{
+    $configEmail = configString(loadSiteConfig(), ['company', 'email']);
+
+    if (
+        $configEmail !== '' &&
+        !preg_match('/^\[[A-Z0-9_]+\]$/', $configEmail)
+    ) {
+        return $configEmail;
+    }
+
+    return trim(
+        getenv('ECHOFORM_CONTACT_EMAIL') ?: 'hello@echoform.studio'
+    );
+}
+
 function parseRequestData(): array
 {
     $contentType = strtolower(
@@ -667,9 +731,7 @@ $formType = $cleanFields['formType'] ?? '';
 $inquiryType = $cleanFields['inquiryType'] ?? '';
 $subject = subjectForForm($formType, $inquiryType);
 
-$recipient = trim(
-    getenv('ECHOFORM_CONTACT_EMAIL') ?: 'hello@echoform.studio'
-);
+$recipient = configuredRecipientEmail();
 
 if (!filter_var($recipient, FILTER_VALIDATE_EMAIL)) {
     respond(

@@ -5,6 +5,8 @@ window.ECHOFORM_CONFIG = {
         "tagline": "Shape the way your room sounds.",
         "shortDescription": "An independent acoustic design information, planning, consultation, and inquiry platform for clearer, more intentional rooms.",
         "logoText": "ECHOFORM",
+        "logoIconPath": "assets/images/echoform-favicon.svg",
+        "logoIconAlt": "",
         "accentLetter": "O",
         "accentLetterIndex": 3,
         "logoAlt": "Echoform",
