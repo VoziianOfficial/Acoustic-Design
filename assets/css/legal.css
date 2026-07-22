@@ -397,6 +397,8 @@ body[data-page="cookie-policy"] {
     display: grid;
     gap: 12px;
     margin-block: 20px;
+    padding-left: 0;
+    list-style: none;
 }
 
 .legal-document__section li {
@@ -405,6 +407,10 @@ body[data-page="cookie-policy"] {
     color: var(--color-ink-soft, #5B616A);
     font-size: 0.88rem;
     line-height: 1.7;
+}
+
+.legal-document__section li::marker {
+    content: "";
 }
 
 .legal-document__section ul li::before {
