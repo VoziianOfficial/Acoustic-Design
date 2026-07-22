@@ -885,3 +885,152 @@ window.ECHOFORM_CONFIG = {
         }
     }
 };
+
+
+window.ECHOFORM_CONFIG = window.ECHOFORM_CONFIG || {};
+
+window.ECHOFORM_CONFIG.serviceFaqs = {
+    "home-studio": {
+        eyebrow: "Studio FAQs",
+        title: "Home Studio Questions",
+        image: "assets/images/home-hero-studio.webp",
+        imageAlt:
+            "Home recording studio with acoustic treatment, desk and monitoring equipment",
+
+        items: [
+            {
+                question: "Where should acoustic treatment begin in a home studio?",
+                answer:
+                    "Planning normally begins with the listening position, speaker placement, room dimensions, side-wall reflections, rear boundary, ceiling, corners, and any doors or windows that limit placement."
+            },
+            {
+                question: "How many panels does a small studio need?",
+                answer:
+                    "There is no universal panel count. Suitable coverage depends on the room dimensions, panel depth, available air gaps, speaker position, listening distance, furnishings, and the acoustic issue being addressed."
+            },
+            {
+                question: "Do all home studios need bass traps?",
+                answer:
+                    "Small rooms often experience strong low-frequency variation, but the suitable type, depth, quantity, and placement of bass control depend on the room geometry and available space."
+            },
+            {
+                question: "Can treatment improve recording and mixing?",
+                answer:
+                    "Appropriate treatment may reduce disruptive reflections and improve monitoring or microphone clarity, but outcomes still depend on placement, products, equipment, construction, and room use."
+            },
+            {
+                question: "Can a rented room use studio treatment?",
+                answer:
+                    "Many rented rooms can use removable panels, freestanding absorbers, revised furniture placement, rugs, curtains, and non-permanent mounting methods where permitted."
+            }
+        ]
+    },
+
+    "streaming-room": {
+        eyebrow: "Streaming FAQs",
+        title: "Streaming Room Questions",
+        image: "assets/images/contact-hero.webp",
+        imageAlt:
+            "Modern streaming and voice recording room with acoustic treatment",
+
+        items: [
+            {
+                question: "What matters most in a streaming room?",
+                answer:
+                    "Microphone position, speaking distance, nearby reflective surfaces, computer and ventilation noise, room layout, camera framing, and the balance between visible and discreet treatment all matter."
+            },
+            {
+                question: "Can acoustic panels reduce room echo on calls?",
+                answer:
+                    "Suitable absorptive treatment may reduce disruptive reflections and improve speech clarity, but performance depends on panel depth, coverage, placement, room size, furnishings, and microphone technique."
+            },
+            {
+                question: "Where should panels go around a microphone?",
+                answer:
+                    "Useful positions may include nearby side walls, the wall behind or in front of the speaker, ceiling reflection zones, and other large reflective boundaries close to the microphone."
+            },
+            {
+                question: "Is foam enough for a streaming setup?",
+                answer:
+                    "Thin foam may affect some higher-frequency reflections, but it does not provide broad acoustic control or meaningful sound isolation. Product depth and verified performance should be considered."
+            },
+            {
+                question: "Can treatment remain visually discreet?",
+                answer:
+                    "Treatment can often be integrated through fabric colours, printed finishes, timber details, ceiling elements, freestanding panels, or placement outside the primary camera frame."
+            }
+        ]
+    },
+
+    "acoustic-panels": {
+        eyebrow: "Panel FAQs",
+        title: "Acoustic Panel Questions",
+        image: "assets/images/material-fabric-panel.webp",
+        imageAlt:
+            "Fabric acoustic panels integrated into a modern interior",
+
+        items: [
+            {
+                question: "What makes one acoustic panel different from another?",
+                answer:
+                    "Panels can differ in depth, density, facing material, backing, frame construction, air gap, mounting method, fire information, tested performance, finish, and intended frequency range."
+            },
+            {
+                question: "Where should acoustic panels be placed?",
+                answer:
+                    "Placement depends on room use and may include side-wall reflection points, rear boundaries, ceilings, corners, microphone zones, conversation areas, or other large reflective surfaces."
+            },
+            {
+                question: "Do thicker panels perform better?",
+                answer:
+                    "Greater depth can improve lower-frequency absorption, especially with a suitable air gap, but performance also depends on material properties, construction, placement, and verified product data."
+            },
+            {
+                question: "Can panels be mounted without damaging walls?",
+                answer:
+                    "Some rooms can use freestanding panels, removable mounting systems, tension methods, furniture-supported treatment, or other non-permanent approaches where safe and permitted."
+            },
+            {
+                question: "Can acoustic panels soundproof a room?",
+                answer:
+                    "No. Panels primarily manage reflections inside a room. Sound isolation usually depends on mass, airtight sealing, structural separation, doors, windows, ventilation, and flanking paths."
+            }
+        ]
+    },
+
+    "soundproofing": {
+        eyebrow: "Isolation FAQs",
+        title: "Soundproofing Questions",
+        image: "assets/images/material-door-seal.webp",
+        imageAlt:
+            "Detailed sound isolation construction and acoustic sealing materials",
+
+        items: [
+            {
+                question: "How is soundproofing different from treatment?",
+                answer:
+                    "Treatment changes reflections and sound quality inside a room. Soundproofing aims to reduce transmission between spaces through construction, mass, sealing, decoupling, and control of flanking paths."
+            },
+            {
+                question: "Can acoustic foam soundproof a wall?",
+                answer:
+                    "No. Foam does not provide the mass, airtightness, or structural separation normally required for meaningful sound isolation between rooms."
+            },
+            {
+                question: "Why do doors and gaps matter so much?",
+                answer:
+                    "Sound can pass through small openings, lightweight doors, frames, vents, sockets, junctions, and other weak points. Isolation is often limited by the least effective part of the assembly."
+            },
+            {
+                question: "Can an existing room become completely silent?",
+                answer:
+                    "Complete silence should not be promised. Results depend on the building structure, sound source, receiving room, frequency range, flanking paths, ventilation, workmanship, and available construction depth."
+            },
+            {
+                question: "When is building-specific input necessary?",
+                answer:
+                    "Qualified input may be appropriate for structural changes, ceilings, floors, fire-rated assemblies, ventilation, electrical conflicts, moisture risks, landlord permissions, and regulated building work."
+            }
+        ]
+    }
+};
