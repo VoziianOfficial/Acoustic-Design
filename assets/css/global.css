@@ -2810,3 +2810,74 @@ html:not(.aos-ready) [data-aos] {
         max-height: none;
     }
 }
+
+@media (max-width: 767px) {
+    html,
+    body {
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
+    .site-shell,
+    .site-main,
+    .site-section,
+    .site-container,
+    .site-container--narrow,
+    .site-container--reading {
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
+    .site-container,
+    .site-container--narrow,
+    .site-container--reading {
+        width: min(calc(100% - (var(--page-gutter) * 2)), var(--container-width));
+    }
+
+    .site-section>*,
+    .site-grid,
+    .site-grid--two,
+    .site-grid--three,
+    .site-grid--four,
+    .site-grid--aside,
+    .site-split,
+    .site-section-heading,
+    .site-section-heading--spread,
+    [class*="__layout"],
+    [class*="__grid"],
+    [class*="__rows"],
+    [class*="__content"],
+    [data-slider-shell],
+    .swiper,
+    .swiper-slide {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .swiper-wrapper {
+        min-width: 0;
+    }
+
+    [data-slider-shell],
+    .swiper {
+        overflow-x: clip;
+    }
+
+    img,
+    video,
+    canvas,
+    iframe,
+    svg {
+        max-width: 100%;
+    }
+
+    .site-button,
+    .site-form__control,
+    .site-form__select,
+    .site-form__textarea,
+    .site-form__checkbox,
+    .site-accordion__trigger {
+        max-width: 100%;
+    }
+}

@@ -214,8 +214,8 @@
                     </div>
 
                     <div class="contact-main__form-shell" data-aos="fade-left">
-                        <form class="site-form contact-form" action="contact.php" method="post" data-echoform-form
-                            data-form-type="general" aria-describedby="contact-form-disclaimer">
+                    <form class="site-form contact-form" id="contact-form" action="contact.php" method="post" data-echoform-form
+                        data-form-type="general" aria-describedby="contact-form-disclaimer">
                             <input type="hidden" name="formType" value="general">
                             <input type="hidden" name="sourcePage" value="contact.html">
                             <input type="hidden" name="formStartedAt" value="">
@@ -382,66 +382,110 @@
                             </div>
                         </section>
 
-            <section class="site-section site-section--warm contact-paths" aria-labelledby="contact-paths-title">
-                <div class="site-container">
-                    <div class="contact-paths__header" data-aos="fade-up">
-                        <span class="site-eyebrow site-eyebrow--cyan">Inquiry Paths</span>
-                        <h2 id="contact-paths-title">Choose the Right Route</h2>
-                        <p>Different requests need different context. Select the path that most closely matches the
-                            intended conversation.</p>
-                    </div>
-
-                    <div class="contact-paths__grid">
-                        <a class="contact-path contact-path--plan" href="acoustic-plan.html#request-plan"
-                            data-aos="fade-up">
-                            <span class="contact-path__icon">
-                                <i data-lucide="scan-line" aria-hidden="true"></i>
-                            </span>
-                            <div>
-                                <h3>Acoustic Plan</h3>
-                                <p>Use the detailed planning form when dimensions, room type, acoustic goal, layout, and
-                                    practical limits are already available.</p>
-                                <span class="contact-path__link">
-                                    Request a plan
-                                    <i data-lucide="arrow-up-right" aria-hidden="true"></i>
-                                </span>
+                        <section class="site-section contact-entryways" aria-labelledby="contact-entryways-title">
+                            <div class="site-container">
+                                <div class="contact-entryways__header">
+                                    <div data-aos="fade-right">
+                                        <span class="site-eyebrow site-eyebrow--yellow">
+                                            Choose a Direction
+                                        </span>
+                        
+                                        <h2 id="contact-entryways-title">
+                                            How Can We Help?
+                                        </h2>
+                                    </div>
+                        
+                                    <p data-aos="fade-left">
+                                        Choose the path that best matches your inquiry. You can share
+                                        a room project, ask a general acoustic question, or introduce
+                                        a relevant collaboration proposal.
+                                    </p>
+                                </div>
+                        
+                                <div class="contact-entryways__grid">
+                                    <a class="contact-entry-card contact-entry-card--blue" href="#contact-form" data-aos="fade-up">
+                                        <span class="contact-entry-card__label">
+                                            Project inquiry
+                                        </span>
+                        
+                                        <div class="contact-entry-card__copy">
+                                            <h3>Plan an Acoustic Room</h3>
+                        
+                                            <p>
+                                                Share the room dimensions, intended use, layout,
+                                                acoustic concern, visual priorities, and practical
+                                                restrictions.
+                                            </p>
+                                        </div>
+                        
+                                        <span class="contact-entry-card__action">
+                                            <span>Start a project inquiry</span>
+                        
+                                            <span class="contact-entry-card__arrow" aria-hidden="true">
+                                                <i data-lucide="arrow-down-right"></i>
+                                            </span>
+                                        </span>
+                        
+                                        <i class="contact-entry-card__illustration" data-lucide="scan-search" aria-hidden="true"></i>
+                                    </a>
+                        
+                                    <a class="contact-entry-card contact-entry-card--dark" href="#contact-form" data-aos="fade-up"
+                                        data-aos-delay="70">
+                                        <span class="contact-entry-card__label">
+                                            General question
+                                        </span>
+                        
+                                        <div class="contact-entry-card__copy">
+                                            <h3>Ask About Acoustics</h3>
+                        
+                                            <p>
+                                                Ask about room treatment, panel placement, studios,
+                                                streaming spaces, materials, or realistic isolation
+                                                expectations.
+                                            </p>
+                                        </div>
+                        
+                                        <span class="contact-entry-card__action">
+                                            <span>Send your question</span>
+                        
+                                            <span class="contact-entry-card__arrow" aria-hidden="true">
+                                                <i data-lucide="arrow-down-right"></i>
+                                            </span>
+                                        </span>
+                        
+                                        <i class="contact-entry-card__illustration" data-lucide="message-circle-question"
+                                            aria-hidden="true"></i>
+                                    </a>
+                        
+                                    <a class="contact-entry-card contact-entry-card--yellow" href="#advertise-collaborate" data-aos="fade-up"
+                                        data-aos-delay="140">
+                                        <span class="contact-entry-card__label">
+                                            Business inquiry
+                                        </span>
+                        
+                                        <div class="contact-entry-card__copy">
+                                            <h3>Advertise or Collaborate</h3>
+                        
+                                            <p>
+                                                Introduce a relevant campaign, educational idea,
+                                                acoustic-industry partnership, creative project,
+                                                or tailored collaboration.
+                                            </p>
+                                        </div>
+                        
+                                        <span class="contact-entry-card__action">
+                                            <span>Explore collaboration</span>
+                        
+                                            <span class="contact-entry-card__arrow" aria-hidden="true">
+                                                <i data-lucide="arrow-down-right"></i>
+                                            </span>
+                                        </span>
+                        
+                                        <i class="contact-entry-card__illustration" data-lucide="network" aria-hidden="true"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </a>
-
-                        <a class="contact-path contact-path--question" href="#contact-main-title"
-                            data-contact-focus-form data-aos="fade-up" data-aos-delay="70">
-                            <span class="contact-path__icon">
-                                <i data-lucide="message-circle-question" aria-hidden="true"></i>
-                            </span>
-                            <div>
-                                <h3>General Question</h3>
-                                <p>Use the contact form for a broader acoustic question, website inquiry, clarification
-                                    request, or project introduction.</p>
-                                <span class="contact-path__link">
-                                    Send a message
-                                    <i data-lucide="arrow-up-right" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                        </a>
-
-                        <a class="contact-path contact-path--partnership" href="#advertise-collaborate"
-                            data-aos="fade-up" data-aos-delay="140">
-                            <span class="contact-path__icon">
-                                <i data-lucide="network" aria-hidden="true"></i>
-                            </span>
-                            <div>
-                                <h3>Advertising or Collaboration</h3>
-                                <p>Share a relevant campaign, educational idea, creative project, acoustic-industry
-                                    proposal, or tailored partnership opportunity.</p>
-                                <span class="contact-path__link">
-                                    Explore partnerships
-                                    <i data-lucide="arrow-up-right" aria-hidden="true"></i>
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
+                        </section>
 
             <section class="site-section site-section--white contact-prepare" aria-labelledby="contact-prepare-title">
                 <div class="site-container contact-prepare__layout">
@@ -529,66 +573,7 @@
                 </div>
             </section>
 
-            <section class="site-section site-section--dark contact-process" aria-labelledby="contact-process-title">
-                <div class="site-container">
-                    <div class="contact-process__header" data-aos="fade-up">
-                        <span class="site-eyebrow site-eyebrow--yellow">After Submission</span>
-                        <h2 id="contact-process-title">How the Inquiry Moves</h2>
-                        <p>The submitted information is reviewed before any next step, clarification request, or
-                            possible specialist connection is discussed.</p>
-                    </div>
 
-                    <div class="contact-process__steps">
-                        <article data-aos="fade-up">
-                            <span class="contact-process__icon">
-                                <i data-lucide="send" aria-hidden="true"></i>
-                            </span>
-                            <div>
-                                <span class="contact-process__number">01</span>
-                                <h3>Submit the Inquiry</h3>
-                                <p>Share the project type, room context, main goal, practical limits, and a valid email
-                                    address.</p>
-                            </div>
-                        </article>
-
-                        <article data-aos="fade-up" data-aos-delay="70">
-                            <span class="contact-process__icon">
-                                <i data-lucide="clipboard-list" aria-hidden="true"></i>
-                            </span>
-                            <div>
-                                <span class="contact-process__number">02</span>
-                                <h3>Review the Details</h3>
-                                <p>The information is checked for clarity, relevance, sufficient room context, and the
-                                    type of response requested.</p>
-                            </div>
-                        </article>
-
-                        <article data-aos="fade-up" data-aos-delay="140">
-                            <span class="contact-process__icon">
-                                <i data-lucide="mail-search" aria-hidden="true"></i>
-                            </span>
-                            <div>
-                                <span class="contact-process__number">03</span>
-                                <h3>Clarify Where Needed</h3>
-                                <p>Additional dimensions, photographs, layout details, construction context, or project
-                                    expectations may be requested by email.</p>
-                            </div>
-                        </article>
-
-                        <article data-aos="fade-up" data-aos-delay="210">
-                            <span class="contact-process__icon">
-                                <i data-lucide="route" aria-hidden="true"></i>
-                            </span>
-                            <div>
-                                <span class="contact-process__number">04</span>
-                                <h3>Explore a Next Step</h3>
-                                <p>The reply may include educational direction, planning questions, relevant resources,
-                                    or a possible independent-specialist route where appropriate.</p>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </section>
 
             <section class="site-section site-section--white contact-faq" aria-labelledby="contact-faq-title">
                 <div class="site-container contact-faq__layout">

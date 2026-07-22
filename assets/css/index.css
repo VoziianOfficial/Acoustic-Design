@@ -3560,3 +3560,29 @@
         transform: none;
     }
 }
+
+@media (max-width: 767px) {
+    .site-section,
+    .site-container,
+    [class*="__layout"],
+    [class*="__grid"],
+    [class*="__rows"],
+    [class*="__content"],
+    [class*="__media"],
+    [class*="__visual"],
+    [class*="__image"],
+    [class*="__card"],
+    [class*="__row"],
+    [data-slider-shell],
+    .swiper,
+    .swiper-slide {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .site-section,
+    [data-slider-shell],
+    .swiper {
+        overflow-x: clip;
+    }
+}
