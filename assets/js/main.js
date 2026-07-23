@@ -603,11 +603,10 @@
             .join("");
     }
 
-    function buildHeaderPhone(className) {
-        const phone = config.company.phone;
-        const phoneHref = normalizePhoneHref(phone);
+    function buildHeaderEmail(className) {
+        const email = config.company.email;
 
-        if (!phoneHref) {
+        if (!validEmail(email)) {
             return "";
         }
 
@@ -616,11 +615,11 @@
             class="site-button site-button--secondary ${escapeAttribute(
             className || ""
         )}"
-            href="tel:${escapeAttribute(phoneHref)}"
-            aria-label="Call ${escapeAttribute(config.brand.name)}"
+            href="mailto:${escapeAttribute(email)}"
+            aria-label="Email ${escapeAttribute(config.brand.name)}"
         >
-            <i data-lucide="phone" aria-hidden="true"></i>
-            <span>${escapeHtml(phone)}</span>
+            <i data-lucide="mail" aria-hidden="true"></i>
+            <span>${escapeHtml(email)}</span>
         </a>
     `;
     }
@@ -642,7 +641,7 @@
             </ul>
           </nav>
           <div class="site-header__actions">
-            ${buildHeaderPhone(
+            ${buildHeaderEmail(
                 "site-button--small site-header__phone"
             )}
             <a
@@ -689,7 +688,7 @@
             </ul>
           </nav>
           <div class="site-mobile-menu__footer">
-            ${buildHeaderPhone(
+            ${buildHeaderEmail(
                 "site-mobile-menu__phone"
             )}
             <a
@@ -707,10 +706,7 @@
 
     function buildFooterContact() {
         const email = config.company.email;
-        const phone = config.company.phone;
         const address = config.company.address;
-
-        const phoneHref = normalizePhoneHref(phone);
 
         const emailMarkup = validEmail(email)
             ? `
@@ -722,14 +718,6 @@
                 ? `<span>${escapeHtml(email)}</span>`
                 : "";
 
-        const phoneMarkup = phoneHref
-            ? `
-            <a href="tel:${escapeAttribute(phoneHref)}">
-                ${escapeHtml(phone)}
-            </a>
-        `
-            : "";
-
         const addressMarkup = address
             ? `<span>${escapeHtml(address)}</span>`
             : "";
@@ -737,7 +725,6 @@
         return `
         <div class="site-footer__contact">
             ${emailMarkup}
-            ${phoneMarkup}
             ${addressMarkup}
         </div>
     `;
@@ -2764,118 +2751,10 @@
 
     function renderAutomaticCompanyContacts(root) {
         const scope = root || document;
-        const phone = config.company.phone;
-        const phoneHref = normalizePhoneHref(phone);
-
-        if (!phoneHref) {
-            return;
-        }
-
-        /*
-         * Contact page.
-         */
-        const contactDetails = scope.querySelector(
-            ".contact-main__details"
-        );
-
-        if (
-            contactDetails &&
-            !contactDetails.querySelector(
-                "[data-generated-company-phone]"
-            )
-        ) {
-            const phoneCard = `
-            <article data-generated-company-phone>
-                <span class="contact-main__detail-icon">
-                    <i data-lucide="phone" aria-hidden="true"></i>
-                </span>
-
-                <div>
-                    <h3>Phone</h3>
-
-                    <a href="tel:${escapeAttribute(phoneHref)}">
-                        ${escapeHtml(phone)}
-                    </a>
-
-                    <p>
-                        For company and inquiry communication.
-                    </p>
-                </div>
-            </article>
-        `;
-
-            const firstCard = contactDetails.firstElementChild;
-
-            if (firstCard) {
-                firstCard.insertAdjacentHTML(
-                    "afterend",
-                    phoneCard
-                );
-            } else {
-                contactDetails.insertAdjacentHTML(
-                    "beforeend",
-                    phoneCard
-                );
-            }
-        }
-
-        /*
-         * Privacy, Terms и Cookie contact cards.
-         */
         scope
-            .querySelectorAll(".legal-contact-card__details")
+            .querySelectorAll("[data-generated-company-phone]")
             .forEach(function (container) {
-                if (
-                    container.querySelector(
-                        "[data-generated-company-phone]"
-                    )
-                ) {
-                    return;
-                }
-
-                container.insertAdjacentHTML(
-                    "beforeend",
-                    `
-                    <a
-                        href="tel:${escapeAttribute(phoneHref)}"
-                        data-generated-company-phone
-                    >
-                        <i
-                            data-lucide="phone"
-                            aria-hidden="true"
-                        ></i>
-
-                        <span>${escapeHtml(phone)}</span>
-                    </a>
-                `
-                );
-            });
-
-        /*
-         * Блок Who Handles Your Information.
-         */
-        scope
-            .querySelectorAll(".legal-company-card > div")
-            .forEach(function (container) {
-                if (
-                    container.querySelector(
-                        "[data-generated-company-phone]"
-                    )
-                ) {
-                    return;
-                }
-
-                container.insertAdjacentHTML(
-                    "beforeend",
-                    `
-                    <a
-                        href="tel:${escapeAttribute(phoneHref)}"
-                        data-generated-company-phone
-                    >
-                        ${escapeHtml(phone)}
-                    </a>
-                `
-                );
+                container.remove();
             });
     }
 
